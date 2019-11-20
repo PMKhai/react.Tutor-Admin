@@ -14,6 +14,12 @@ import {
   LinearProgress
 } from '@material-ui/core';
 
+const getBase64 = (img, callback) => {
+  const reader = new FileReader();
+  reader.addEventListener('load', () => callback(reader.result));
+  reader.readAsDataURL(img);
+}
+
 const useStyles = makeStyles(theme => ({
   root: {},
   details: {
@@ -53,10 +59,9 @@ const AccountProfile = props => {
   const handleChooseFile = e =>{
     let file = e.target.files[0];
     setAvatar(file);
-    setUrlAvatar('');
-    console.log(typeof avatar)
-    console.log(urlAvatar);
-
+    getBase64(file, imageUrl =>
+      setUrlAvatar(imageUrl)
+    );
   }
 
   return (
@@ -104,8 +109,7 @@ const AccountProfile = props => {
             <Avatar
               className={classes.avatar} 
               component="span"
-              imgProps={avatar}
-              src={user.avatar}
+              src={urlAvatar === '' ? user.avatar : urlAvatar}
             />
           </label>
         </div>
