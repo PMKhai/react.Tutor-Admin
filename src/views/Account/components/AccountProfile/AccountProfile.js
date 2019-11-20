@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import moment from 'moment';
@@ -24,7 +24,8 @@ const useStyles = makeStyles(theme => ({
     height: 110,
     width: 100,
     flexShrink: 0,
-    flexGrow: 0
+    flexGrow: 0,
+    cursor: 'pointer',
   },
   progress: {
     marginTop: theme.spacing(2)
@@ -36,7 +37,9 @@ const useStyles = makeStyles(theme => ({
 
 const AccountProfile = props => {
   const { className, ...rest } = props;
-
+  
+  const [avatar, setAvatar] = useState(null);
+  const [urlAvatar, setUrlAvatar] = useState('');
   const classes = useStyles();
 
   const user = {
@@ -46,6 +49,15 @@ const AccountProfile = props => {
     timezone: 'GTM-7',
     avatar: '/images/avatars/avatar_11.png'
   };
+
+  const handleChooseFile = e =>{
+    let file = e.target.files[0];
+    setAvatar(file);
+    setUrlAvatar('');
+    console.log(typeof avatar)
+    console.log(urlAvatar);
+
+  }
 
   return (
     <Card
@@ -76,10 +88,26 @@ const AccountProfile = props => {
               {moment().format('hh:mm A')} ({user.timezone})
             </Typography>
           </div>
-          <Avatar
-            className={classes.avatar}
-            src={user.avatar}
+          <input
+            accept="image/*"
+            className={classes.input}
+            id="raised-button-file"
+            multiple
+            onChange={(e) => handleChooseFile(e)}
+            style={{ display: 'none' }}
+            type="file"
           />
+          <label 
+            className={classes.avatar} 
+            htmlFor="raised-button-file"
+          >
+            <Avatar
+              className={classes.avatar} 
+              component="span"
+              imgProps={avatar}
+              src={user.avatar}
+            />
+          </label>
         </div>
         <div className={classes.progress}>
           <Typography variant="body1">Profile Completeness: 70%</Typography>
@@ -94,6 +122,7 @@ const AccountProfile = props => {
         <Button
           className={classes.uploadButton}
           color="primary"
+          component="span"
           variant="text"
         >
           Upload picture
