@@ -19,7 +19,7 @@ import {
   TablePagination,
   Button,
 } from '@material-ui/core';
-import { SettingsApplications } from '@material-ui/icons'
+import { SettingsApplications } from '@material-ui/icons';
 import { getInitials } from 'helpers';
 import AccountDetails from '../../../Account/components/AccountDetails';
 
@@ -105,7 +105,7 @@ const UsersTable = props => {
   };
 
   // eslint-disable-next-line react/no-multi-comp
-  const handleRenderComponent = () =>{ setShowFromEdit(true) }
+  const handleRenderComponent = () =>{ setShowFromEdit(true);};
 
   return (
     <Card
@@ -179,7 +179,11 @@ const UsersTable = props => {
                       {moment(user.createdAt).format('DD/MM/YYYY')}
                     </TableCell>
                     <TableCell>
-                      <Button onClick={handleRenderComponent}>
+                      <Button 
+                        color="primary" 
+                        onClick={handleRenderComponent}
+                        variant="contained"
+                      >
                         <SettingsApplications/>
                       </Button>
                     </TableCell>
