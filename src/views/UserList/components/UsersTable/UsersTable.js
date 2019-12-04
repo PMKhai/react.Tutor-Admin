@@ -68,7 +68,7 @@ const UsersTable = props => {
     let selectedUsers;
 
     if (event.target.checked) {
-      selectedUsers = users.map(user => user.id);
+      selectedUsers = users.map(user => user.email);
     } else {
       selectedUsers = [];
     }
@@ -76,12 +76,12 @@ const UsersTable = props => {
     setSelectedUsers(selectedUsers);
   };
 
-  const handleSelectOne = (event, id) => {
-    const selectedIndex = selectedUsers.indexOf(id);
+  const handleSelectOne = (event, email) => {
+    const selectedIndex = selectedUsers.indexOf(email);
     let newSelectedUsers = [];
 
     if (selectedIndex === -1) {
-      newSelectedUsers = newSelectedUsers.concat(selectedUsers, id);
+      newSelectedUsers = newSelectedUsers.concat(selectedUsers, email);
     } else if (selectedIndex === 0) {
       newSelectedUsers = newSelectedUsers.concat(selectedUsers.slice(1));
     } else if (selectedIndex === selectedUsers.length - 1) {
@@ -136,7 +136,7 @@ const UsersTable = props => {
                   </TableCell>
                   <TableCell>Name</TableCell>
                   <TableCell>Email</TableCell>
-                  <TableCell>Location</TableCell>
+                  <TableCell>Address</TableCell>
                   <TableCell>Phone</TableCell>
                   <TableCell>Registration date</TableCell>
                   <TableCell>Edit</TableCell>
@@ -147,14 +147,14 @@ const UsersTable = props => {
                   <TableRow
                     className={classes.tableRow}
                     hover
-                    key={user.id}
-                    selected={selectedUsers.indexOf(user.id) !== -1}
+                    key={user.email}
+                    selected={selectedUsers.indexOf(user.email) !== -1}
                   >
                     <TableCell padding="checkbox">
                       <Checkbox
-                        checked={selectedUsers.indexOf(user.id) !== -1}
+                        checked={selectedUsers.indexOf(user.email) !== -1}
                         color="primary"
-                        onChange={event => handleSelectOne(event, user.id)}
+                        onChange={event => handleSelectOne(event, user.email)}
                         value="true"
                       />
                     </TableCell>
@@ -164,15 +164,14 @@ const UsersTable = props => {
                           className={classes.avatar}
                           src={user.avatarUrl}
                         >
-                          {getInitials(user.name)}
+                          {getInitials(user.lastName)}
                         </Avatar>
-                        <Typography variant="body1">{user.name}</Typography>
+                        <Typography variant="body1">{user.lastName}</Typography>
                       </div>
                     </TableCell>
                     <TableCell>{user.email}</TableCell>
                     <TableCell>
-                      {user.address.city}, {user.address.state},{' '}
-                      {user.address.country}
+                      {user.address}
                     </TableCell>
                     <TableCell>{user.phone}</TableCell>
                     <TableCell>

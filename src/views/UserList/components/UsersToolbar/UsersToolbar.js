@@ -44,6 +44,7 @@ const UsersToolbar = props => {
         <Button className={classes.exportButton}>Export</Button>
         <Button
           color="primary"
+          href =  "/sign-up"
           variant="contained"
         >
           Add user

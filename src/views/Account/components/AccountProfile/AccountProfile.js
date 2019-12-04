@@ -18,7 +18,7 @@ const getBase64 = (img, callback) => {
   const reader = new FileReader();
   reader.addEventListener('load', () => callback(reader.result));
   reader.readAsDataURL(img);
-}
+};
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -44,6 +44,7 @@ const useStyles = makeStyles(theme => ({
 const AccountProfile = props => {
   const { className, ...rest } = props;
   
+  // eslint-disable-next-line no-unused-vars
   const [avatar, setAvatar] = useState(null);
   const [urlAvatar, setUrlAvatar] = useState('');
   const classes = useStyles();
@@ -62,7 +63,7 @@ const AccountProfile = props => {
     getBase64(file, imageUrl =>
       setUrlAvatar(imageUrl)
     );
-  }
+  };
 
   return (
     <Card

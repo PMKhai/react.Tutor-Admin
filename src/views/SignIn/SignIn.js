@@ -1,19 +1,17 @@
+/* eslint-disable no-console */
 import React, { useState, useEffect } from 'react';
-import { Link as RouterLink, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 import validate from 'validate.js';
 import { makeStyles } from '@material-ui/styles';
 import {
   Grid,
   Button,
-  IconButton,
   TextField,
-  Link,
   Typography
 } from '@material-ui/core';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
-import { Facebook as FacebookIcon, Google as GoogleIcon } from 'icons';
 
 const schema = {
   email: {
@@ -23,6 +21,7 @@ const schema = {
       maximum: 64
     }
   },
+  
   password: {
     presence: { allowEmpty: false, message: 'is required' },
     length: {
@@ -30,6 +29,8 @@ const schema = {
     }
   }
 };
+
+
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -147,9 +148,6 @@ const SignIn = props => {
     }));
   }, [formState.values]);
 
-  const handleBack = () => {
-    history.goBack();
-  };
 
   const handleChange = event => {
     event.persist();
@@ -172,9 +170,24 @@ const SignIn = props => {
 
   const handleSignIn = event => {
     event.preventDefault();
-    history.push('/dashboard');
+    console.log(formState.values);
+    axios.post('https://api-tutor-admin.herokuapp.com/user/login', {
+      email: formState.values.email,
+      password: formState.values.password,
+    }).then(function (response) {
+      const  token  = response.data.token;
+      localStorage.setItem('token',token);
+      console.log(token);
+      console.log(response);
+      if (response.data.token != null){
+        history.push('/dashboard');
+      }
+    }).catch(function (error) {
+      console.log(error);
+    });
+   
   };
-
+  
   const hasError = field =>
     formState.touched[field] && formState.errors[field] ? true : false;
 
@@ -222,11 +235,7 @@ const SignIn = props => {
           xs={12}
         >
           <div className={classes.content}>
-            <div className={classes.contentHeader}>
-              <IconButton onClick={handleBack}>
-                <ArrowBackIcon />
-              </IconButton>
-            </div>
+            
             <div className={classes.contentBody}>
               <form
                 className={classes.form}
@@ -238,47 +247,7 @@ const SignIn = props => {
                 >
                   Sign in
                 </Typography>
-                <Typography
-                  color="textSecondary"
-                  gutterBottom
-                >
-                  Sign in with social media
-                </Typography>
-                <Grid
-                  className={classes.socialButtons}
-                  container
-                  spacing={2}
-                >
-                  <Grid item>
-                    <Button
-                      color="primary"
-                      onClick={handleSignIn}
-                      size="large"
-                      variant="contained"
-                    >
-                      <FacebookIcon className={classes.socialIcon} />
-                      Login with Facebook
-                    </Button>
-                  </Grid>
-                  <Grid item>
-                    <Button
-                      onClick={handleSignIn}
-                      size="large"
-                      variant="contained"
-                    >
-                      <GoogleIcon className={classes.socialIcon} />
-                      Login with Google
-                    </Button>
-                  </Grid>
-                </Grid>
-                <Typography
-                  align="center"
-                  className={classes.sugestion}
-                  color="textSecondary"
-                  variant="body1"
-                >
-                  or login with email address
-                </Typography>
+                
                 <TextField
                   className={classes.textField}
                   error={hasError('email')}
@@ -318,19 +287,7 @@ const SignIn = props => {
                 >
                   Sign in now
                 </Button>
-                <Typography
-                  color="textSecondary"
-                  variant="body1"
-                >
-                  Don't have an account?{' '}
-                  <Link
-                    component={RouterLink}
-                    to="/sign-up"
-                    variant="h6"
-                  >
-                    Sign up
-                  </Link>
-                </Typography>
+                
               </form>
             </div>
           </div>
