@@ -5,11 +5,10 @@ import { makeStyles } from '@material-ui/styles';
 import { Divider, Drawer } from '@material-ui/core';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import PeopleIcon from '@material-ui/icons/People';
-import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
-import TextFieldsIcon from '@material-ui/icons/TextFields';
-import ImageIcon from '@material-ui/icons/Image';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import SettingsIcon from '@material-ui/icons/Settings';
+import SubjectIcon from '@material-ui/icons/Subject';
+import SupervisorAccountIcon from '@material-ui/icons/SupervisedUserCircle';
 // import LockOpenIcon from '@material-ui/icons/LockOpen';
 
 import { Profile, SidebarNav } from './components';
@@ -49,24 +48,19 @@ const Sidebar = props => {
       icon: <DashboardIcon />
     },
     {
+      title: 'Skills',
+      href: '/skills',
+      icon: <SubjectIcon />
+    },
+    {
       title: 'Users',
       href: '/users',
       icon: <PeopleIcon />
     },
     {
-      title: 'Products',
-      href: '/products',
-      icon: <ShoppingBasketIcon />
-    },
-    {
-      title: 'Typography',
-      href: '/typography',
-      icon: <TextFieldsIcon />
-    },
-    {
-      title: 'Icons',
-      href: '/icons',
-      icon: <ImageIcon />
+      title: 'Admin',
+      href: '/admin',
+      icon: <SupervisorAccountIcon />
     },
     {
       title: 'Account',

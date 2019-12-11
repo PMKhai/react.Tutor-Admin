@@ -5,14 +5,15 @@ import { makeStyles } from '@material-ui/styles';
 import {
   Card,
   CardContent,
-  CardActions,
+  // CardActions,
   Typography,
-  Grid,
+  // Grid,
+  Avatar,
   Divider
 } from '@material-ui/core';
-import AccessTimeIcon from '@material-ui/icons/AccessTime';
-import GetAppIcon from '@material-ui/icons/GetApp';
-
+// import AccessTimeIcon from '@material-ui/icons/AccessTime';
+// import GetAppIcon from '@material-ui/icons/GetApp';
+import { getInitials } from 'helpers';
 const useStyles = makeStyles(theme => ({
   root: {},
   imageContainer: {
@@ -39,8 +40,8 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const ProductCard = props => {
-  const { className, product, ...rest } = props;
+const AdminCard = props => {
+  const { className, user, ...rest } = props;
 
   const classes = useStyles();
 
@@ -51,28 +52,30 @@ const ProductCard = props => {
     >
       <CardContent>
         <div className={classes.imageContainer}>
-          <img
-            alt="Product"
-            className={classes.image}
-            src={product.imageUrl}
-          />
+          <Avatar
+            className={classes.avatar}
+            src={user.avatarUrl}
+          >
+            {getInitials(user.lastName)}
+          </Avatar>
+          {/* <Typography variant="body1">{product.lastName}</Typography> */}
         </div>
         <Typography
           align="center"
           gutterBottom
           variant="h4"
         >
-          {product.title}
+          {user.email}
         </Typography>
         <Typography
           align="center"
           variant="body1"
         >
-          {product.description}
+          {user.phone}
         </Typography>
       </CardContent>
       <Divider />
-      <CardActions>
+      {/* <CardActions>
         <Grid
           container
           justify="space-between"
@@ -102,14 +105,14 @@ const ProductCard = props => {
             </Typography>
           </Grid>
         </Grid>
-      </CardActions>
+      </CardActions> */}
     </Card>
   );
 };
 
-ProductCard.propTypes = {
+AdminCard.propTypes = {
   className: PropTypes.string,
-  product: PropTypes.object.isRequired
+  user: PropTypes.object.isRequired
 };
 
-export default ProductCard;
+export default AdminCard;

@@ -1,7 +1,10 @@
-import React, {useState} from 'react';
+/* eslint-disable no-console */
+import React, {useState , useEffect} from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import moment from 'moment';
+import { getInitials } from 'helpers';
+import axios from 'axios';
+// import moment from 'moment';
 import { makeStyles } from '@material-ui/styles';
 import {
   Card,
@@ -13,6 +16,8 @@ import {
   Button,
   LinearProgress
 } from '@material-ui/core';
+import {API,ADMIN} from '../../../../config';
+const api = `${API}${ADMIN}`;
 
 const getBase64 = (img, callback) => {
   const reader = new FileReader();
@@ -49,13 +54,8 @@ const AccountProfile = props => {
   const [urlAvatar, setUrlAvatar] = useState('');
   const classes = useStyles();
 
-  const user = {
-    name: 'Shen Zhi',
-    city: 'Los Angeles',
-    country: 'USA',
-    timezone: 'GTM-7',
-    avatar: '/images/avatars/avatar_11.png'
-  };
+ 
+  console.log(rest.user);
 
   const handleChooseFile = e =>{
     let file = e.target.files[0];
@@ -64,6 +64,19 @@ const AccountProfile = props => {
       setUrlAvatar(imageUrl)
     );
   };
+  let [user, setUsers] = useState([]);
+  
+  useEffect(() => {
+    const header = `Bearer ${localStorage.getItem('token')}`;
+    const loadData = async () => {
+      const response = await axios.get(api, {
+        headers: { Authorization: header },
+      });
+      setUsers(response.data.user);
+    };
+    loadData();
+  }, []);
+  console.log('data account',user);
 
   return (
     <Card
@@ -77,21 +90,22 @@ const AccountProfile = props => {
               gutterBottom
               variant="h2"
             >
-              John Doe
+              {rest.user.lastName}
             </Typography>
             <Typography
               className={classes.locationText}
               color="textSecondary"
               variant="body1"
             >
-              {user.city}, {user.country}
+              {rest.user.address}
             </Typography>
             <Typography
               className={classes.dateText}
               color="textSecondary"
               variant="body1"
             >
-              {moment().format('hh:mm A')} ({user.timezone})
+              {rest.user.phone}
+              {/* {moment().format('hh:mm A')} ({user.timezone}) */}
             </Typography>
           </div>
           <input
@@ -110,8 +124,10 @@ const AccountProfile = props => {
             <Avatar
               className={classes.avatar} 
               component="span"
-              src={urlAvatar === '' ? user.avatar : urlAvatar}
-            />
+              src={urlAvatar === '' ? rest.user.avatar : urlAvatar}
+            >
+              {getInitials(rest.user.lastName)}
+            </Avatar>
           </label>
         </div>
         <div className={classes.progress}>

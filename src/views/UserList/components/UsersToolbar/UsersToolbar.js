@@ -44,7 +44,7 @@ const UsersToolbar = props => {
         <Button className={classes.exportButton}>Export</Button>
         <Button
           color="primary"
-          href =  "/sign-up"
+          href =  "https://tutor-reactjs.firebaseapp.com/signup"
           variant="contained"
         >
           Add user

@@ -5,7 +5,7 @@ import { Link as RouterLink, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import validate from 'validate.js';
 import axios from 'axios';
-
+import {API,SIGNUP} from '../../config';
 import { makeStyles } from '@material-ui/styles';
 import {
   Grid,
@@ -18,7 +18,7 @@ import {
   Typography
 } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-
+const api = `${API}${SIGNUP}`;
 const schema = {
   firstName: {
     presence: { allowEmpty: false, message: 'is required' },
@@ -207,7 +207,7 @@ const SignUp = props => {
     const header = `Bearer ${localStorage.getItem('token')}`;
      
     console.log(header);
-    axios.post('https://api-tutor-admin.herokuapp.com/user/register', {
+    axios.post(api, {
       email: formState.values.email,
       password: formState.values.password,
       firstName: formState.values.firstName,
@@ -230,6 +230,7 @@ const SignUp = props => {
     });
   };
 
+  
   const hasError = field => 
     formState.touched[field] && formState.errors[field] ? true : false;
 
@@ -405,8 +406,8 @@ const SignUp = props => {
                   }
                   label="Phone"
                   name="phone"
+                  type="number"
                   onChange={handleChange}
-                  type="text"
                   value={formState.values.phone || ''}
                   variant="outlined"
                 />
@@ -420,7 +421,7 @@ const SignUp = props => {
                   label="identity card"
                   name="identity"
                   onChange={handleChange}
-                  type="text"
+                  type="number"
                   value={formState.values.identity || ''}
                   variant="outlined"
                 />

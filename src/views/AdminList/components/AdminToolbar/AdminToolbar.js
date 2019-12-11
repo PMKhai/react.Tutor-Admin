@@ -44,9 +44,10 @@ const ProductsToolbar = props => {
         <Button className={classes.exportButton}>Export</Button>
         <Button
           color="primary"
+          href =  "/sign-up"
           variant="contained"
         >
-          Add product
+          Add new Admin
         </Button>
       </div>
       <div className={classes.row}>

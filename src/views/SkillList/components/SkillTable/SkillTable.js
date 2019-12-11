@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import React, { useState , useRef, useEffect} from 'react';
+import React, { useState } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 // import moment from 'moment';
@@ -16,13 +16,13 @@ import {
   TableCell,
   TableHead,
   TableRow,
-  Typography,
+  // Typography,
   TablePagination,
-  Button,
+  // Button,
 } from '@material-ui/core';
-import { SettingsApplications } from '@material-ui/icons';
+// import { SettingsApplications } from '@material-ui/icons';
 import { getInitials } from 'helpers';
-import UserDetail from '../UserDetail';
+// import AccountDetails from '../../../Account/components/AccountDetails';
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -53,24 +53,24 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const UsersTable = props => {
-  const { className, users, ...rest } = props;
+const SkillsTable = props => {
+  const { className, skills, ...rest } = props;
 
   const classes = useStyles();
 
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [page, setPage] = useState(0);
-  const [showFromEdit, setShowFromEdit] = useState(false);
-  const [userUpdate , setUserUpdate] = useState([]);
+  // const [showFromEdit, setShowFromEdit] = useState(false);
+  // const [userUpdate , setUserUpdate] = useState([]);
 
   const handleSelectAll = event => {
-    const { users } = props;
+    const { skills } = props;
 
     let selectedUsers;
 
     if (event.target.checked) {
-      selectedUsers = users.map(user => user.email);
+      selectedUsers = skills.map(skill => skill.name);
     } else {
       selectedUsers = [];
     }
@@ -105,71 +105,27 @@ const UsersTable = props => {
   const handleRowsPerPageChange = event => {
     setRowsPerPage(event.target.value);
   };
+  // var isShow = true;
+  // // eslint-disable-next-line react/no-multi-comp
+  // const handleRenderComponent = (skill) =>{
+  //   setUserUpdate(skill);
+  //   setShowFromEdit(isShow);
+  //   console.log(skill.name);
+  //   isShow = !isShow
+  // };
+
   
-  // eslint-disable-next-line react/no-multi-comp
-  const handleRenderComponent = (user) =>{
-    setUserUpdate(user);
-    setShowFromEdit(true);
-    console.log(user.user);
-  };
-
-  const isRole = (user)=>{
-    if (user.isTutor) {
-      return 'Teacher';
-    } else {
-      return 'Student';
-    }
-  };
-  const isActive = (user)=>{
-    if (user.isActive) {
-      return 'True';
-    } else {
-      return 'False';
-    }
-  };
-
-  function useOutsideAlerter(ref) {
-    /**
-     * Alert if clicked on outside of element
-     */
-    function handleClickOutside(event) {
-      if (ref.current && !ref.current.contains(event.target)) {
-        // alert("You clicked outside of me!");
-        setShowFromEdit(false);
-      }
-    }
-
-    
-  
-    useEffect(() => {
-      // Bind the event listener
-      document.addEventListener('mousedown', handleClickOutside);
-      return () => {
-        // Unbind the event listener on clean up
-        document.removeEventListener('mousedown', handleClickOutside);
-      };
-    });
-  }
-
-  const wrapperRef = useRef(null);
-  useOutsideAlerter(wrapperRef);
   return (
     <Card
       {...rest}
       className={clsx(classes.root, className)}
     >
       <CardContent className={classes.content}>
-        {showFromEdit ? 
-          <div 
-            className={classes.displayCombonent} 
-            ref={wrapperRef}
-          >{props.children}> 
-            <Card 
-              className={classes.cardDetail}
-            > 
-              <UserDetail user={userUpdate.user}/>
-            </Card>
-          </div> : null}
+        {/* {showFromEdit ? <div className={classes.displayCombonent}> 
+          <Card className={classes.cardDetail}> 
+            <AccountDetails user={userUpdate.user}/>
+          </Card>
+        </div> : null} */}
         <PerfectScrollbar>
           <div className={classes.inner}>
             <Table>
@@ -177,36 +133,33 @@ const UsersTable = props => {
                 <TableRow>
                   <TableCell padding="checkbox">
                     <Checkbox
-                      checked={selectedUsers.length === users.length}
+                      checked={selectedUsers.length === skills.length}
                       color="primary"
                       indeterminate={
                         selectedUsers.length > 0 &&
-                        selectedUsers.length < users.length
+                        selectedUsers.length < skills.length
                       }
                       onChange={handleSelectAll}
                     />
                   </TableCell>
-                  <TableCell>Name</TableCell>
-                  <TableCell>Email</TableCell>
-                  <TableCell>Name</TableCell>
-                  <TableCell>Role</TableCell>
-                  <TableCell>Active</TableCell>
-                  <TableCell>Edit</TableCell>
+                  <TableCell>Image</TableCell>
+                  <TableCell>name</TableCell>
+                 
                 </TableRow>
               </TableHead>
               <TableBody>
-                {users.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(user => (
+                {skills.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(skill => (
                   <TableRow
                     className={classes.tableRow}
                     hover
-                    key={user.email}
-                    selected={selectedUsers.indexOf(user.email) !== -1}
+                    key={skill.name}
+                    selected={selectedUsers.indexOf(skill.name) !== -1}
                   >
                     <TableCell padding="checkbox">
                       <Checkbox
-                        checked={selectedUsers.indexOf(user.email) !== -1}
+                        checked={selectedUsers.indexOf(skill.name) !== -1}
                         color="primary"
-                        onChange={event => handleSelectOne(event, user.email)}
+                        onChange={event => handleSelectOne(event, skill.name)}
                         value="true"
                       />
                     </TableCell>
@@ -214,23 +167,22 @@ const UsersTable = props => {
                       <div className={classes.nameContainer}>
                         <Avatar
                           className={classes.avatar}
-                          src={user.urlAvatar}
+                          src={skill.imgUrl}
                         >
-                          {getInitials(user.lastName)}
+                          {getInitials(skill.name)}
                         </Avatar>
-                        <Typography variant="body1">{user.lastName}</Typography>
+                        {/* <Typography variant="body1">{user.lastName}</Typography> */}
                       </div>
                     </TableCell>
-                    <TableCell>{user.email}</TableCell>
-                    <TableCell>
-                      {user.name}
+                    <TableCell>{skill.name}</TableCell>
+                    {/* <TableCell>
+                      {user.address}
                     </TableCell>
-                    <TableCell>{isRole(user)}</TableCell>
+                    <TableCell>{user.phone}</TableCell>
                     <TableCell>
-                      {isActive(user)}
-                      {/* {moment(user.createdAt).format('DD/MM/YYYY')} */}
-                    </TableCell>
-                    <TableCell>
+                      {moment(user.createdAt).format('DD/MM/YYYY')}
+                    </TableCell> */}
+                    {/* <TableCell>
                       <Button 
                         color="primary" 
                         onClick={()=>handleRenderComponent({user})}
@@ -238,7 +190,7 @@ const UsersTable = props => {
                       >
                         <SettingsApplications/>
                       </Button>
-                    </TableCell>
+                    </TableCell> */}
                   </TableRow>
                 ))}
               </TableBody>
@@ -249,7 +201,7 @@ const UsersTable = props => {
       <CardActions className={classes.actions}>
         <TablePagination
           component="div"
-          count={users.length}
+          count={skills.length}
           onChangePage={handlePageChange}
           onChangeRowsPerPage={handleRowsPerPageChange}
           page={page}
@@ -257,13 +209,15 @@ const UsersTable = props => {
           rowsPerPageOptions={[5, 10, 25]}
         />
       </CardActions>
+      
     </Card>
+    
   );
 };
 
-UsersTable.propTypes = {
+SkillsTable.propTypes = {
   className: PropTypes.string,
-  users: PropTypes.array.isRequired
+  skills: PropTypes.array.isRequired
 };
 
-export default UsersTable;
+export default SkillsTable;

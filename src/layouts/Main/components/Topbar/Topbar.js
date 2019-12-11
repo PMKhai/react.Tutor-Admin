@@ -7,7 +7,7 @@ import { AppBar, Toolbar, Badge, Hidden, IconButton } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsIcon from '@material-ui/icons/NotificationsOutlined';
 import InputIcon from '@material-ui/icons/Input';
-
+// import axios from 'axios';
 const useStyles = makeStyles(theme => ({
   root: {
     boxShadow: 'none'
@@ -20,9 +20,14 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const handleSignout = () =>  {
-  console.log('xxx')
-}
+const handleSignout = () =>  { 
+  localStorage.removeItem('token');
+  // console.log('sign out');
+  // axios.get('http://localhost:4000/admin/logout').finally (()=>{
+  //   localStorage.removeItem('token');
+  //   console.log('sign out');
+  // });
+};
 
 const Topbar = props => {
   const { className, onSidebarOpen, ...rest } = props;
@@ -74,6 +79,19 @@ const Topbar = props => {
             onClick={onSidebarOpen}
           >
             <MenuIcon />
+          </IconButton>
+          <IconButton
+            className={classes.signOutButton}
+            color="inherit"
+            onClick={handleSignout}
+            to="/sign-in" 
+          >
+            <RouterLink 
+              style={{height: '24px', color: 'inherit'}}
+              to="/sign-in"
+            >
+              <InputIcon />
+            </RouterLink>
           </IconButton>
         </Hidden>
       </Toolbar>

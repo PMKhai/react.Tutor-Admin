@@ -11,8 +11,8 @@ import {
   TextField,
   Typography
 } from '@material-ui/core';
-
-
+import {API,LOGIN} from '../../config';
+const api = `${API}${LOGIN}`;
 const schema = {
   email: {
     presence: { allowEmpty: false, message: 'is required' },
@@ -171,7 +171,7 @@ const SignIn = props => {
   const handleSignIn = event => {
     event.preventDefault();
     console.log(formState.values);
-    axios.post('https://api-tutor-admin.herokuapp.com/user/login', {
+    axios.post(api, {
       email: formState.values.email,
       password: formState.values.password,
     }).then(function (response) {

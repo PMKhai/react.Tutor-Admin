@@ -2,10 +2,9 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import axios from 'axios';
-import {API , LISTUSER } from '../../config';
-import { UsersToolbar, UsersTable } from './components';
-const api = `${API}${LISTUSER}`;
-
+import {API,LISTSKILL} from '../../config';
+import { SkillsToolbar, SkillsTable } from './components';
+const api = `${API}${LISTSKILL}`;
 const useStyles = makeStyles(theme => ({
   root: {
     padding: theme.spacing(3)
@@ -16,9 +15,9 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-const UserList = () => {
+const SkillList = () => {
   const classes = useStyles();
-  let [users, setUsers] = useState([]);
+  let [skills, setSkills] = useState([]);
 
   useEffect(() => {
     const header = `Bearer ${localStorage.getItem('token')}`;
@@ -28,7 +27,7 @@ const UserList = () => {
           headers: { Authorization: header },
         });
         console.log(response.data);
-        setUsers(response.data);
+        setSkills(response.data);
       } catch (error) {
         console.log(error);
       }
@@ -37,12 +36,12 @@ const UserList = () => {
   }, []);
   return (
     <div className={classes.root}>
-      <UsersToolbar />
+      <SkillsToolbar />
       <div className={classes.content}>
-        <UsersTable users={users} />
+        <SkillsTable skills={skills} />
       </div>
     </div>
   );
 };
 
-export default UserList;
+export default SkillList;

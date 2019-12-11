@@ -2,7 +2,6 @@
 import React, { useState , useEffect  } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
-import axios from 'axios';
 
 import { makeStyles } from '@material-ui/styles';
 import {
@@ -15,36 +14,20 @@ import {
   Button,
   TextField
 } from '@material-ui/core';
-import {API,ADMIN} from '../../../../config';
-const api = `${API}${ADMIN}`;
+
 const useStyles = makeStyles(() => ({
   root: {}
 }));
 
-const AccountDetails = props => {
-  const { className, ...rest } = props;
+const UserDetail = props => {
+  const { className  ,...rest } = props;
   const classes = useStyles();
   const [values, setValues] = useState({
-    firstName: 'Shen',
-    lastName: 'Zhi',
-    email: 'shen.zhi@devias.io',
-    phone: '09888',
-    address: 'Alabama',
   });
-  let [user, setUsers] = useState([]);
-  
   useEffect(() => {
-    const header = `Bearer ${localStorage.getItem('token')}`;
-    const loadData = async () => {
-      const response = await axios.get(api, {
-        headers: { Authorization: header },
-      });
-      setUsers(response.data.user);
-    };
-    loadData();
-  }, []);
-  console.log('data account',user);
-
+    setValues(rest.user);
+  }, [rest.user]);
+  console.log(rest.user);
   console.log(values);
   
   const handleChange = event => {
@@ -56,7 +39,7 @@ const AccountDetails = props => {
 
   
   const updateAdminUser = () =>{
-    console.log('update user admin', values);
+    console.log('update user ', values);
   };
 
 
@@ -80,23 +63,7 @@ const AccountDetails = props => {
             container
             spacing={3}
           >
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
-              <TextField
-                fullWidth
-                helperText="Please specify the first name"
-                label="First name"
-                margin="dense"
-                name="firstName"
-                onChange={handleChange}
-                required
-                value={values.firstName}
-                variant="outlined"
-              />
-            </Grid>
+            
             <Grid
               item
               md={6}
@@ -106,10 +73,10 @@ const AccountDetails = props => {
                 fullWidth
                 label="Last name"
                 margin="dense"
-                name="lastName"
+                name="name"
                 onChange={handleChange}
                 required
-                value={values.lastName}
+                value={values.name}
                 variant="outlined"
               />
             </Grid>
@@ -136,12 +103,12 @@ const AccountDetails = props => {
             >
               <TextField
                 fullWidth
-                label="Phone Number"
+                label="Overview"
                 margin="dense"
-                name="phone"
+                name="overview"
                 onChange={handleChange}
-                type="number"
-                value={values.phone}
+                type="text"
+                value={values.overview}
                 variant="outlined"
               />
             </Grid>
@@ -179,8 +146,8 @@ const AccountDetails = props => {
   );
 };
 
-AccountDetails.propTypes = {
+UserDetail.propTypes = {
   className: PropTypes.string
 };
 
-export default AccountDetails;
+export default UserDetail;

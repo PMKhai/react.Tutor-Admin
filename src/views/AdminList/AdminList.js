@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+/* eslint-disable no-console */
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { IconButton, Grid, Typography } from '@material-ui/core';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-
-import { ProductsToolbar, ProductCard } from './components';
-import mockData from './data';
+import axios from 'axios';
+import { AdminToolbar, AdminCard } from './components';
+// import mockData from './data';
+import {API,LISTADMIN} from '../../config';
+const api = `${API}${LISTADMIN}`;
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -22,28 +25,44 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const ProductList = () => {
+const AdminList = () => {
   const classes = useStyles();
 
-  const [products] = useState(mockData);
+  // const [products] = useState(mockData);
+  let [users, setusers] = useState([]);
 
+  useEffect(() => {
+    const header = `Bearer ${localStorage.getItem('token')}`;
+    const loadData = async () => {
+      try {
+        const response = await axios.get(api, {
+          headers: { Authorization: header },
+        });
+        console.log(response.data);
+        setusers(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    loadData();
+  }, []);
   return (
     <div className={classes.root}>
-      <ProductsToolbar />
+      <AdminToolbar />
       <div className={classes.content}>
         <Grid
           container
           spacing={3}
         >
-          {products.map(product => (
+          {users.map(user => (
             <Grid
               item
-              key={product.id}
+              key={user._id}
               lg={4}
               md={6}
               xs={12}
             >
-              <ProductCard product={product} />
+              <AdminCard user={user} />
             </Grid>
           ))}
         </Grid>
@@ -61,4 +80,4 @@ const ProductList = () => {
   );
 };
 
-export default ProductList;
+export default AdminList;
