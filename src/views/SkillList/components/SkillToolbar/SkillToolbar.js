@@ -70,7 +70,6 @@ const UsersToolbar = props => {
     },{
       headers: { Authorization: header },
     }).then(function (response) {
-
       console.log(response);
     }).catch(function (error) {
       console.log(error);

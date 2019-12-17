@@ -1,4 +1,5 @@
-import React from 'react';
+/* eslint-disable no-console */
+import React, {useEffect, useState} from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
@@ -10,8 +11,12 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import SubjectIcon from '@material-ui/icons/Subject';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisedUserCircle';
 // import LockOpenIcon from '@material-ui/icons/LockOpen';
-
 import { Profile, SidebarNav } from './components';
+import axios from 'axios';
+import { API, ADMIN } from '../../../../config';
+const api = `${API}${ADMIN}`;
+
+
 
 const useStyles = makeStyles(theme => ({
   drawer: {
@@ -73,6 +78,32 @@ const Sidebar = props => {
       icon: <SettingsIcon />
     }
   ];
+  let [user, setUsers] = useState({
+    firstName: 'Shen',
+    lastName: 'Zhi',
+    email: 'shen.zhi@devias.io',
+    phone: '09888',
+    address: 'Alabama',
+  });
+
+  const loadData = async () => {
+    const header = `Bearer ${localStorage.getItem('token')}`;
+    try {
+      const response = await axios.get(api, {
+        headers: { Authorization: header },
+      });
+      const { user } = response.data;
+      setUsers(user);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  console.log(user);
 
   return (
     <Drawer
@@ -86,7 +117,7 @@ const Sidebar = props => {
         {...rest}
         className={clsx(classes.root, className)}
       >
-        <Profile />
+        <Profile user = {user}/>
         <Divider className={classes.divider} />
         <SidebarNav
           className={classes.nav}

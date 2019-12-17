@@ -121,7 +121,7 @@ const UsersTable = props => {
     }
   };
   const isActive = (user)=>{
-    if (user.isActive) {
+    if (user.isActivated) {
       return 'True';
     } else {
       return 'False';

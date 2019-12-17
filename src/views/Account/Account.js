@@ -16,15 +16,15 @@ const Account = () => {
   const classes = useStyles();
 
   let [user, setUsers] = useState([]);
-  
-  useEffect(() => {
+  const loadData = async () => {
     const header = `Bearer ${localStorage.getItem('token')}`;
-    const loadData = async () => {
-      const response = await axios.get(api, {
-        headers: { Authorization: header },
-      });
-      setUsers(response.data.user);
-    };
+    const response = await axios.get(api, {
+      headers: { Authorization: header },
+    });
+    const {user} = response.data;
+    setUsers(user);
+  };
+  useEffect(() => {
     loadData();
   }, []);
   console.log('data account',user);
@@ -51,11 +51,14 @@ const Account = () => {
           xl={8}
           xs={12}
         >
-          <AccountDetails user = {user} />
+          <AccountDetails
+            user = {user}  
+          />
         </Grid>
       </Grid>
     </div>
   );
 };
+
 
 export default Account;

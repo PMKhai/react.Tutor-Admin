@@ -1,9 +1,10 @@
+/* eslint-disable no-console */
 import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/styles';
 import { Button } from '@material-ui/core';
-
+import abc from '../UsersTable'
 import { SearchInput } from 'components';
 
 const useStyles = makeStyles(theme => ({
@@ -33,6 +34,10 @@ const UsersToolbar = props => {
 
   const classes = useStyles();
 
+  const deleteUsers = ()=>{
+    console.log(abc.selectedUsers);
+  };
+
   return (
     <div
       {...rest}
@@ -40,8 +45,10 @@ const UsersToolbar = props => {
     >
       <div className={classes.row}>
         <span className={classes.spacer} />
-        <Button className={classes.importButton}>Import</Button>
-        <Button className={classes.exportButton}>Export</Button>
+        <Button 
+          className={classes.exportButton} 
+          onClick={deleteUsers}
+        >Delete</Button>
         <Button
           color="primary"
           href =  "https://tutor-reactjs.firebaseapp.com/signup"

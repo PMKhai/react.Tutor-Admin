@@ -12,7 +12,9 @@ import {
   Divider,
   Grid,
   Button,
-  TextField
+  TextField,
+  Switch,
+  FormControlLabel
 } from '@material-ui/core';
 
 const useStyles = makeStyles(() => ({
@@ -20,21 +22,22 @@ const useStyles = makeStyles(() => ({
 }));
 
 const UserDetail = props => {
-  const { className  ,...rest } = props;
+  const { className,...rest } = props;
   const classes = useStyles();
   const [values, setValues] = useState({
   });
+  const {user} = rest;
   useEffect(() => {
-    setValues(rest.user);
-  }, [rest.user]);
-  console.log(rest.user);
-  console.log(values);
+    setValues(user);
+  }, []);
   
   const handleChange = event => {
     setValues({
       ...values,
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
+      isActivated : event.target.checked
     });
+    
   };
 
   
@@ -42,6 +45,13 @@ const UserDetail = props => {
     console.log('update user ', values);
   };
 
+  const isActive = (values)=>{
+    if (values.isActivated === true || values.isActivated === 'true') {
+      return true;
+    } else {
+      return false;
+    }
+  };
 
 
   return (
@@ -76,7 +86,7 @@ const UserDetail = props => {
                 name="name"
                 onChange={handleChange}
                 required
-                value={values.name}
+                value={values.name || ''}
                 variant="outlined"
               />
             </Grid>
@@ -92,7 +102,7 @@ const UserDetail = props => {
                 name="email"
                 onChange={handleChange}
                 required
-                value={values.email}
+                value={values.email || ''}
                 variant="outlined"
               />
             </Grid>
@@ -108,7 +118,7 @@ const UserDetail = props => {
                 name="overview"
                 onChange={handleChange}
                 type="text"
-                value={values.overview}
+                value={values.overview || ''}
                 variant="outlined"
               />
             </Grid>
@@ -124,8 +134,35 @@ const UserDetail = props => {
                 name="address"
                 onChange={handleChange}
                 required
-                value={values.address}
+                value={values.address || ''}
                 variant="outlined"
+              />
+            </Grid>
+            <Grid
+              item
+              md={6}
+              xs={12}
+            >
+              {/* <TextField
+                fullWidth
+                label="Active"
+                margin="dense"
+                name="address"
+                onChange={handleChange}
+                required
+                value={values.address || ''}
+                variant="outlined"
+              /> */}
+              <FormControlLabel
+                control={
+                  <Switch 
+                    checked={isActive(values)|| false} 
+                    name="isActivated"
+                    onChange={handleChange}
+                    value={true}
+                  />    
+                }
+                label="Active"
               />
             </Grid>
           </Grid>

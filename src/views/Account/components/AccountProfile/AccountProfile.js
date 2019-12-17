@@ -1,9 +1,9 @@
 /* eslint-disable no-console */
-import React, {useState , useEffect} from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { getInitials } from 'helpers';
-import axios from 'axios';
+
 // import moment from 'moment';
 import { makeStyles } from '@material-ui/styles';
 import {
@@ -16,8 +16,6 @@ import {
   Button,
   LinearProgress
 } from '@material-ui/core';
-import {API,ADMIN} from '../../../../config';
-const api = `${API}${ADMIN}`;
 
 const getBase64 = (img, callback) => {
   const reader = new FileReader();
@@ -64,19 +62,8 @@ const AccountProfile = props => {
       setUrlAvatar(imageUrl)
     );
   };
-  let [user, setUsers] = useState([]);
-  
-  useEffect(() => {
-    const header = `Bearer ${localStorage.getItem('token')}`;
-    const loadData = async () => {
-      const response = await axios.get(api, {
-        headers: { Authorization: header },
-      });
-      setUsers(response.data.user);
-    };
-    loadData();
-  }, []);
-  console.log('data account',user);
+
+  const {user} = rest;
 
   return (
     <Card
@@ -90,21 +77,21 @@ const AccountProfile = props => {
               gutterBottom
               variant="h2"
             >
-              {rest.user.lastName}
+              {user.lastName}
             </Typography>
             <Typography
               className={classes.locationText}
               color="textSecondary"
               variant="body1"
             >
-              {rest.user.address}
+              {user.address}
             </Typography>
             <Typography
               className={classes.dateText}
               color="textSecondary"
               variant="body1"
             >
-              {rest.user.phone}
+              {user.phone}
               {/* {moment().format('hh:mm A')} ({user.timezone}) */}
             </Typography>
           </div>
@@ -124,9 +111,9 @@ const AccountProfile = props => {
             <Avatar
               className={classes.avatar} 
               component="span"
-              src={urlAvatar === '' ? rest.user.avatar : urlAvatar}
+              src={urlAvatar === '' ? user.avatar : urlAvatar}
             >
-              {getInitials(rest.user.lastName)}
+              {getInitials(user.lastName)}
             </Avatar>
           </label>
         </div>

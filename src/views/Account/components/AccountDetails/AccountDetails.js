@@ -2,7 +2,6 @@
 import React, { useState , useEffect  } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
-import axios from 'axios';
 
 import { makeStyles } from '@material-ui/styles';
 import {
@@ -15,37 +14,28 @@ import {
   Button,
   TextField
 } from '@material-ui/core';
-import {API,ADMIN} from '../../../../config';
-const api = `${API}${ADMIN}`;
+
 const useStyles = makeStyles(() => ({
   root: {}
 }));
 
 const AccountDetails = props => {
-  const { className, ...rest } = props;
+  const { className  ,...rest } = props;
   const classes = useStyles();
   const [values, setValues] = useState({
-    firstName: 'Shen',
-    lastName: 'Zhi',
-    email: 'shen.zhi@devias.io',
-    phone: '09888',
-    address: 'Alabama',
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    address: ''
   });
-  let [user, setUsers] = useState([]);
-  
-  useEffect(() => {
-    const header = `Bearer ${localStorage.getItem('token')}`;
-    const loadData = async () => {
-      const response = await axios.get(api, {
-        headers: { Authorization: header },
-      });
-      setUsers(response.data.user);
-    };
-    loadData();
-  }, []);
-  console.log('data account',user);
+  const {user} = rest;
 
+  useEffect(() => {
+    setValues(user);
+  }, [user]);
   console.log(values);
+  console.log('test account detail:',user);
   
   const handleChange = event => {
     setValues({
@@ -93,7 +83,7 @@ const AccountDetails = props => {
                 name="firstName"
                 onChange={handleChange}
                 required
-                value={values.firstName}
+                value={values.firstName || ''}
                 variant="outlined"
               />
             </Grid>
@@ -109,7 +99,7 @@ const AccountDetails = props => {
                 name="lastName"
                 onChange={handleChange}
                 required
-                value={values.lastName}
+                value={values.lastName || ''}
                 variant="outlined"
               />
             </Grid>
@@ -125,7 +115,7 @@ const AccountDetails = props => {
                 name="email"
                 onChange={handleChange}
                 required
-                value={values.email}
+                value={values.email || ''}
                 variant="outlined"
               />
             </Grid>
@@ -141,7 +131,7 @@ const AccountDetails = props => {
                 name="phone"
                 onChange={handleChange}
                 type="number"
-                value={values.phone}
+                value={values.phone || ''}
                 variant="outlined"
               />
             </Grid>
@@ -157,7 +147,7 @@ const AccountDetails = props => {
                 name="address"
                 onChange={handleChange}
                 required
-                value={values.address}
+                value={values.address || ''}
                 variant="outlined"
               />
             </Grid>
