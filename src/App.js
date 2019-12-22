@@ -21,6 +21,9 @@ validate.validators = {
   ...validate.validators,
   ...validators
 };
+if (localStorage.getItem('token')== null) { 
+  browserHistory.push('sign-in'); 
+}
 
 export default class App extends Component {
   render() {
