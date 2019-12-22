@@ -163,7 +163,7 @@ const UsersTable = props => {
           <div 
             className={classes.displayCombonent} 
             ref={wrapperRef}
-          >{props.children}> 
+          > 
             <Card 
               className={classes.cardDetail}
             > 

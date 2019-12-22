@@ -10,6 +10,7 @@ import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import SettingsIcon from '@material-ui/icons/Settings';
 import SubjectIcon from '@material-ui/icons/Subject';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisedUserCircle';
+import WorkIcon from '@material-ui/icons/Work';
 // import LockOpenIcon from '@material-ui/icons/LockOpen';
 import { Profile, SidebarNav } from './components';
 import axios from 'axios';
@@ -51,6 +52,11 @@ const Sidebar = props => {
       title: 'Dashboard',
       href: '/dashboard',
       icon: <DashboardIcon />
+    },
+    {
+      title: 'Contracts',
+      href: '/contracts',
+      icon: <WorkIcon />
     },
     {
       title: 'Skills',

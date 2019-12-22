@@ -11,6 +11,7 @@ import {
   UserList as UserListView,
   Account as AccountView,
   Settings as SettingsView,
+  Contracts as ContractsView,
   SignUp as SignUpView,
   SignIn as SignInView,
   NotFound as NotFoundView,
@@ -59,6 +60,12 @@ const Routes = () => {
         exact
         layout={MainLayout}
         path="/settings"
+      />
+      <RouteWithLayout
+        component={ContractsView}
+        exact
+        layout={MinimalLayout}
+        path="/contracts"
       />
       <RouteWithLayout
         component={SignUpView}

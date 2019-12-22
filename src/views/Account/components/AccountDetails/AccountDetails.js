@@ -45,9 +45,6 @@ const AccountDetails = props => {
   };
 
   
-  const updateAdminUser = () =>{
-    console.log('update user admin', values);
-  };
 
 
 
@@ -158,7 +155,7 @@ const AccountDetails = props => {
         <CardActions>
           <Button
             color="primary"
-            onClick ={updateAdminUser}
+            // onClick ={updateAdminUser}
             variant="contained"
           >
             Save details

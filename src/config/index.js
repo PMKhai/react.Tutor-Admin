@@ -7,6 +7,9 @@ export const SIGNUP = 'admin/register';
 export const ADDSKILL = 'skills/newskill';
 export const LISTSKILL = 'skills';
 export const LISTUSER = 'users/list';
+export const LISTCONTRACT = 'contracts';
+export const UPDATEUSER = 'users/updateUser';
+
 
 
 
