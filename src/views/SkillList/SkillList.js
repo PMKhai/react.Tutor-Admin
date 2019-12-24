@@ -26,7 +26,7 @@ const SkillList = () => {
         const response = await axios.get(api, {
           headers: { Authorization: header },
         });
-        console.log(response.data);
+        // console.log(response.data);
         setSkills(response.data);
       } catch (error) {
         console.log(error);

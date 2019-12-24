@@ -17,6 +17,7 @@ const useStyles = makeStyles(theme => ({
 
 
 const UserList = () => {
+  const [selectedUsers, setSelectedUsers] = useState([]);
   const classes = useStyles();
   let [users, setUsers] = useState([]);
  
@@ -26,7 +27,7 @@ const UserList = () => {
       const response = await axios.get(api, {
         headers: { Authorization: header },
       });
-      console.log(response.data);
+      // console.log(response.data);
       setUsers(response.data);
     } catch (error) {
       console.log(error);
@@ -36,11 +37,16 @@ const UserList = () => {
     
     loadData();
   }, [users]);
+  // console.log('test select',selectedUsers);
+  const setSelected = (value) => {
+    setSelectedUsers(value);
+  };
   return (
     <div className={classes.root}>
-      <UsersToolbar />
+      <UsersToolbar selectedUsers={selectedUsers}  />
       <div className={classes.content}>
         <UsersTable
+          onSelected={setSelected}
           users={users} 
         />
       </div>

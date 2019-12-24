@@ -56,7 +56,7 @@ const useStyles = makeStyles(theme => ({
 const UsersTable = props => {
   const { className, users, ...rest } = props;
   const classes = useStyles();
-
+  const {onSelected} = rest;
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [page, setPage] = useState(0);
@@ -75,6 +75,7 @@ const UsersTable = props => {
     }
 
     setSelectedUsers(selectedUsers);
+    onSelected(selectedUsers);
   };
 
   const handleSelectOne = (event, email) => {
@@ -95,6 +96,7 @@ const UsersTable = props => {
     }
 
     setSelectedUsers(newSelectedUsers);
+    onSelected(newSelectedUsers);
   };
 
   const handlePageChange = (event, page) => {

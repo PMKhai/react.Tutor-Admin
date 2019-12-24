@@ -124,6 +124,16 @@ const UsersToolbar = props => {
               type="text"
               value = {values.name}
             />
+            <TextField
+              fullWidth
+              id="decription"
+              label="Decription"
+              margin="dense"
+              name = "decription"
+              onChange={handleChange}
+              type="text"
+              value = {values.decription}
+            />
           </DialogContent>
           <DialogActions>
             <Button

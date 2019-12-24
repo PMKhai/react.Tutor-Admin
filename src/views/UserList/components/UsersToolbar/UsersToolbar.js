@@ -4,9 +4,10 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/styles';
 import { Button } from '@material-ui/core';
-import abc from '../UsersTable';
 import { SearchInput } from 'components';
-
+import axios from 'axios';
+import {API,DELETEUSER} from '../../../../config';
+const api = `${API}${DELETEUSER}`;
 const useStyles = makeStyles(theme => ({
   root: {},
   row: {
@@ -31,11 +32,22 @@ const useStyles = makeStyles(theme => ({
 
 const UsersToolbar = props => {
   const { className, ...rest } = props;
-
+  const {selectedUsers} = rest;
   const classes = useStyles();
 
+  const removeUser = async (value)=>{
+    const header = `Bearer ${localStorage.getItem('token')}`;
+    await axios.post(api,{
+      email: value
+    }, {
+      headers: { Authorization: header },
+    });
+  };
   const deleteUsers = ()=>{
-    console.log(abc.selectedUsers);
+    selectedUsers.forEach(element => {
+      removeUser(element);
+    });
+    
   };
 
   return (

@@ -144,7 +144,7 @@ const SkillsTable = props => {
                   </TableCell>
                   <TableCell>Image</TableCell>
                   <TableCell>name</TableCell>
-                 
+                  <TableCell>Decription</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -171,10 +171,10 @@ const SkillsTable = props => {
                         >
                           {getInitials(skill.name)}
                         </Avatar>
-                        {/* <Typography variant="body1">{user.lastName}</Typography> */}
                       </div>
                     </TableCell>
                     <TableCell>{skill.name}</TableCell>
+                    <TableCell>{skill.description}</TableCell>
                     {/* <TableCell>
                       {user.address}
                     </TableCell>
