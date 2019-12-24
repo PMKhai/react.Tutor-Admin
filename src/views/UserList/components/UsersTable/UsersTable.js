@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import React, { useState , useRef, useEffect} from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 // import moment from 'moment';
@@ -55,14 +55,13 @@ const useStyles = makeStyles(theme => ({
 
 const UsersTable = props => {
   const { className, users, ...rest } = props;
-
   const classes = useStyles();
 
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [page, setPage] = useState(0);
   const [showFromEdit, setShowFromEdit] = useState(false);
-  const [userUpdate , setUserUpdate] = useState([]);
+  const [userUpdate, setUserUpdate] = useState([]);
 
   const handleSelectAll = event => {
     const { users } = props;
@@ -105,22 +104,35 @@ const UsersTable = props => {
   const handleRowsPerPageChange = event => {
     setRowsPerPage(event.target.value);
   };
-  
+  const setShow = (value) => {
+    setShowFromEdit(value);
+
+  };
+  const isFirstRender = useRef(true);
+
+  useEffect(() => {
+    console.log('isFirstRender', isFirstRender.current);
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+    }
+
+  }, []);
+
   // eslint-disable-next-line react/no-multi-comp
-  const handleRenderComponent = (user) =>{
+  const handleRenderComponent = (user) => {
     setUserUpdate(user);
-    setShowFromEdit(true);
+    setShow(true);
     console.log(user.user);
   };
 
-  const isRole = (user)=>{
+  const isRole = (user) => {
     if (user.isTutor) {
       return 'Teacher';
     } else {
       return 'Student';
     }
   };
-  const isActive = (user)=>{
+  const isActive = (user) => {
     if (user.isActivated) {
       return 'True';
     } else {
@@ -139,8 +151,8 @@ const UsersTable = props => {
       }
     }
 
-    
-  
+
+
     useEffect(() => {
       // Bind the event listener
       document.addEventListener('mousedown', handleClickOutside);
@@ -159,15 +171,18 @@ const UsersTable = props => {
       className={clsx(classes.root, className)}
     >
       <CardContent className={classes.content}>
-        {showFromEdit ? 
-          <div 
-            className={classes.displayCombonent} 
+        {showFromEdit ?
+          <div
+            className={classes.displayCombonent}
             ref={wrapperRef}
-          > 
-            <Card 
+          >
+            <Card
               className={classes.cardDetail}
-            > 
-              <UserDetail user={userUpdate.user}/>
+            >
+              <UserDetail
+                onClickUpdate={setShow}
+                user={userUpdate.user}
+              />
             </Card>
           </div> : null}
         <PerfectScrollbar>
@@ -231,12 +246,10 @@ const UsersTable = props => {
                       {/* {moment(user.createdAt).format('DD/MM/YYYY')} */}
                     </TableCell>
                     <TableCell>
-                      <Button 
-                        color="primary" 
-                        onClick={()=>handleRenderComponent({user})}
-                        variant="contained"
+                      <Button
+                        onClick={() => handleRenderComponent({ user })}
                       >
-                        <SettingsApplications/>
+                        <SettingsApplications />
                       </Button>
                     </TableCell>
                   </TableRow>

@@ -16,6 +16,9 @@ import {
   FormControlLabel,
   Switch,
 } from '@material-ui/core';
+import axios from 'axios';
+import {API , UPDATEUSER } from '../../../../config';
+const api = `${API}${UPDATEUSER}`;
 
 const useStyles = makeStyles(() => ({
   root: {}
@@ -42,7 +45,6 @@ const UserDetail = props => {
     setValues(rest.user);
   }, [rest.user]);
   console.log(values);
-  console.log('test account detail:', rest.user);
 
   const handleChange = event => {
     setValues({
@@ -60,8 +62,34 @@ const UserDetail = props => {
       return values.rating;
     }
   };
+  const header = `Bearer ${localStorage.getItem('token')}`;
+
+  const loadData = async () => {
+    try {
+      const response = await axios.post(api, {
+        _id: values._id,
+        email:values.email,
+        isTutor: values.isTutor,
+        isActivated: values.isActivated,
+        isActiveToken: values.isActiveToken,
+        name: values.name,
+        p_number: values.p_number,
+        urlAvatar: values.urlAvatar,
+        address: values.address,
+        overview: values.overview,
+        price: values.price,
+        rating:values.rating 
+      }, {
+        headers: { Authorization: header },
+      });
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const updateUser = ()=>{
+    loadData();
     console.log('update test:',values);
   };
 
@@ -141,7 +169,7 @@ const UserDetail = props => {
                 name="overview"
                 onChange={handleChange}
                 required
-                value={values.overview || ''}
+                value={values.overview || 'Not found'}
                 variant="outlined"
               />
             </Grid>
@@ -178,15 +206,30 @@ const UserDetail = props => {
                 variant="outlined"
               />
             </Grid>
+            <Grid
+              item
+              md={6}
+              xs={12}
+            >
+              <TextField
+                fullWidth
+                label="p_number"
+                margin="dense"
+                name="p_number"
+                onChange={handleChange}
+                required
+                value={values.p_number || '0'}
+                variant="outlined"
+              />
+            </Grid>
           </Grid>
           <FormControlLabel
             control={
-              <Switch
-                checked={isActive(values) || false}
+              <Switch 
+                checked={isActive(values)|| false} 
                 name="isActivated"
                 onChange={handleChange}
-              // value={true}
-              />
+              />    
             }
             label="Active"
           />

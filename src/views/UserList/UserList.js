@@ -19,27 +19,30 @@ const useStyles = makeStyles(theme => ({
 const UserList = () => {
   const classes = useStyles();
   let [users, setUsers] = useState([]);
-
+ 
+  const loadData = async () => {
+    try {
+      const header = `Bearer ${localStorage.getItem('token')}`;
+      const response = await axios.get(api, {
+        headers: { Authorization: header },
+      });
+      console.log(response.data);
+      setUsers(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
-    const header = `Bearer ${localStorage.getItem('token')}`;
-    const loadData = async () => {
-      try {
-        const response = await axios.get(api, {
-          headers: { Authorization: header },
-        });
-        console.log(response.data);
-        setUsers(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
+    
     loadData();
-  }, []);
+  }, [users]);
   return (
     <div className={classes.root}>
       <UsersToolbar />
       <div className={classes.content}>
-        <UsersTable users={users} />
+        <UsersTable
+          users={users} 
+        />
       </div>
     </div>
   );

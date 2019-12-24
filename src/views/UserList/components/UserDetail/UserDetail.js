@@ -24,11 +24,12 @@ const useStyles = makeStyles(() => ({
   root: {}
 }));
 
-const UserDetail = props => {
+const UserDetail = (props) => {
   const { className,...rest } = props;
   const classes = useStyles();
   const [values, setValues] = useState({
   });
+  const {onClickUpdate} = rest;
   const {user} = rest;
   useEffect(() => {
     setValues(user);
@@ -49,6 +50,7 @@ const UserDetail = props => {
     try {
       const response = await axios.post(api, {
         _id: values._id,
+        email:values.email,
         isTutor: values.isTutor,
         isActivated: values.isActivated,
         isActiveToken: values.isActiveToken,
@@ -63,7 +65,6 @@ const UserDetail = props => {
         headers: { Authorization: header },
       });
       console.log(response.data);
-      // setValues(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -72,13 +73,13 @@ const UserDetail = props => {
    
   
   const updateAdminUser = () =>{
-    
+    // props.setShowFromEdit(false);
+    onClickUpdate(false);
     loadData();
+    
+    console.log('test update', values);
   };
 
-  // const viewProfile = ()=>{
-  //   console.log('view profile');
-  // };
 
   const isActive = (values)=>{
     if (values.isActivated === true || values.isActivated === 'true') {
@@ -120,6 +121,8 @@ const UserDetail = props => {
                 label="Last name"
                 margin="dense"
                 name="name"
+                onChange={handleChange}
+                required
                 value={values.name || ''}
                 variant="outlined"
                 
@@ -138,7 +141,6 @@ const UserDetail = props => {
                 label="Email Address"
                 margin="dense"
                 name="email"
-                onChange={handleChange}
                 required
                 value={values.email || ''}
                 variant="outlined"
@@ -155,6 +157,7 @@ const UserDetail = props => {
                 margin="dense"
                 name="overview"
                 onChange={handleChange}
+                required
                 type="text"
                 value={values.overview || ''}
                 variant="outlined"

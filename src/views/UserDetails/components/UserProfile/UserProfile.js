@@ -105,7 +105,7 @@ const UserProfile = props => {
               className={classes.dateText}
               color="textSecondary"
               variant="body1"
-            >
+            >Overview:
               {values.overview}
             </Typography>
           </div>
