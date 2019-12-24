@@ -1,32 +1,48 @@
+/* eslint-disable no-useless-escape */
 /* eslint-disable no-console */
 import React , { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { Grid } from '@material-ui/core';
 import axios from 'axios';
-import { AccountProfile, AccountDetails } from './components';
-import {API,ADMIN} from '../../config';
-const api = `${API}${ADMIN}`;
+import { UserProfile, UserDetail } from './components';
+import {API,GETUSER} from '../../config';
+const api = `${API}${GETUSER}`;
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: theme.spacing(4)
   }
 }));
-
-const UserDetail = () => {
+function getParameterByName(name, url) {
+  if (!url) url = window.location.href;
+  name = name.replace(/[\[\]]/g, '\\$&');
+  var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+    results = regex.exec(url);
+  if (!results) return null;
+  if (!results[2]) return '';
+  return decodeURIComponent(results[2].replace(/\+/g, ' '));
+}
+const UserDetails = () => {
   const classes = useStyles();
-
   let [user, setUsers] = useState([]);
-  const loadData = async () => {
-    const header = `Bearer ${localStorage.getItem('token')}`;
-    const response = await axios.get(api, {
-      headers: { Authorization: header },
-    });
-    const {user} = response.data;
-    setUsers(user);
-  };
+  const obj = getParameterByName('id');
+  console.log('test id',obj);
+  
   useEffect(() => {
+    const loadData = async () => {
+      const header = `Bearer ${localStorage.getItem('token')}`;
+      const response = await axios.post(api,{
+        _id: getParameterByName('id')
+      }, {
+        headers: { Authorization: header },
+      });
+      const {data} = response;
+      setUsers(data);
+      console.log('data getuser',user);
+    };
     loadData();
+    // eslint-disable-next-line
   }, []);
+  console.log('data getuser',user);
 
   return (
     <div className={classes.root}>
@@ -41,7 +57,7 @@ const UserDetail = () => {
           xl={4}
           xs={12}
         >
-          <AccountProfile user = {user}/>
+          <UserProfile user = {user}/>
         </Grid>
         <Grid 
           item
@@ -50,7 +66,7 @@ const UserDetail = () => {
           xl={8}
           xs={12}
         >
-          <AccountDetails
+          <UserDetail
             user = {user}  
           />
         </Grid>
@@ -60,4 +76,4 @@ const UserDetail = () => {
 };
 
 
-export default UserDetail;
+export default UserDetails;

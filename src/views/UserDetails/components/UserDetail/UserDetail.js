@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import React, { useState   } from 'react';
+import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
@@ -12,39 +12,66 @@ import {
   Divider,
   Grid,
   Button,
-  TextField
+  TextField,
+  FormControlLabel,
+  Switch,
 } from '@material-ui/core';
 
 const useStyles = makeStyles(() => ({
   root: {}
 }));
 
-const UserDetails = props => {
-  const { className  ,...rest } = props;
+const UserDetail = props => {
+  const { className, ...rest } = props;
   const classes = useStyles();
   const [values, setValues] = useState({
-    firstName: '',
-    lastName: '',
     email: '',
-    phone: '',
-    address: ''
+    isTutor: null,
+    isActivated: false,
+    isActiveToken: null,
+    name: '',
+    p_number: '',
+    urlAvatar: null,
+    address: null,
+    overview: '',
+    price: null,
+    rating: null
   });
-  const {user} = rest;
 
-  // useEffect(() => {
-  //   setValues(user);
-  // }, [user]);
+  useEffect(() => {
+    setValues(rest.user);
+  }, [rest.user]);
   console.log(values);
-  console.log('test account detail:',user);
-  
+  console.log('test account detail:', rest.user);
+
   const handleChange = event => {
     setValues({
       ...values,
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
+      isActivated : event.target.checked
     });
   };
 
 
+  const updateRatting = (values)=>{
+    if (values.rating > 5){
+      return 5;
+    } else {
+      return values.rating;
+    }
+  };
+
+  const updateUser = ()=>{
+    console.log('update test:',values);
+  };
+
+  const isActive = (values)=>{
+    if (values.isActivated === true || values.isActivated === 'true') {
+      return true;
+    } else {
+      return false;
+    }
+  };
 
 
 
@@ -73,41 +100,11 @@ const UserDetails = props => {
               xs={12}
             >
               <TextField
+                InputProps={{
+                  readOnly: true,
+                }}
                 fullWidth
-                helperText="Please specify the first name"
-                label="First name"
-                margin="dense"
-                name="firstName"
-                onChange={handleChange}
-                required
-                value={values.firstName || ''}
-                variant="outlined"
-              />
-            </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
-              <TextField
-                fullWidth
-                label="Last name"
-                margin="dense"
-                name="lastName"
-                onChange={handleChange}
-                required
-                value={values.lastName || ''}
-                variant="outlined"
-              />
-            </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
-              <TextField
-                fullWidth
-                label="Email Address"
+                label="email"
                 margin="dense"
                 name="email"
                 onChange={handleChange}
@@ -123,12 +120,12 @@ const UserDetails = props => {
             >
               <TextField
                 fullWidth
-                label="Phone Number"
+                label=" name"
                 margin="dense"
-                name="phone"
+                name="Name"
                 onChange={handleChange}
-                type="number"
-                value={values.phone || ''}
+                required
+                value={values.name || ''}
                 variant="outlined"
               />
             </Grid>
@@ -139,23 +136,67 @@ const UserDetails = props => {
             >
               <TextField
                 fullWidth
-                label="Address"
+                label="Overview"
                 margin="dense"
-                name="address"
+                name="overview"
                 onChange={handleChange}
                 required
-                value={values.address || ''}
+                value={values.overview || ''}
+                variant="outlined"
+              />
+            </Grid>
+            <Grid
+              item
+              md={6}
+              xs={12}
+            >
+              <TextField
+                fullWidth
+                label="Price"
+                margin="dense"
+                name="price"
+                onChange={handleChange}
+                type="number"
+                value={values.price || '0'}
+                variant="outlined"
+              />
+            </Grid>
+            <Grid
+              item
+              md={6}
+              xs={12}
+            >
+              <TextField
+                fullWidth
+                label="Rating"
+                margin="dense"
+                name="rating"
+                onChange={handleChange}
+                required
+                type="number"
+                value={updateRatting(values) || '0'}
                 variant="outlined"
               />
             </Grid>
           </Grid>
+          <FormControlLabel
+            control={
+              <Switch
+                checked={isActive(values) || false}
+                name="isActivated"
+                onChange={handleChange}
+              // value={true}
+              />
+            }
+            label="Active"
+          />
         </CardContent>
         <Divider />
 
         <CardActions>
           <Button
             color="primary"
-            // onClick ={updateAdminUser}
+            onClick ={updateUser}
             variant="contained"
           >
             Save details
@@ -166,8 +207,8 @@ const UserDetails = props => {
   );
 };
 
-UserDetails.propTypes = {
+UserDetail.propTypes = {
   className: PropTypes.string
 };
 
-export default UserDetails;
+export default UserDetail;

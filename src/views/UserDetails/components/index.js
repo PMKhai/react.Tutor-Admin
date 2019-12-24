@@ -1,2 +1,2 @@
-export { default as AccountDetails } from './UserDetails';
-export { default as AccountProfile } from './UserProfile';
+export { default as UserDetail } from './UserDetail';
+export { default as UserProfile } from './UserProfile';

@@ -8,4 +8,4 @@ export { default as SignUp } from './SignUp';
 export { default as UserList } from './UserList';
 export { default as AdminList} from './AdminList';
 export {default as Contracts} from './Contracts';
-
+export {default as UserDetails} from './UserDetails';

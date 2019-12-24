@@ -9,6 +9,7 @@ export const LISTSKILL = 'skills';
 export const LISTUSER = 'users/list';
 export const LISTCONTRACT = 'contracts';
 export const UPDATEUSER = 'users/updateUser';
+export const GETUSER = 'users/getUser';
 
 
 

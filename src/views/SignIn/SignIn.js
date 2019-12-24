@@ -5,13 +5,16 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import validate from 'validate.js';
 import { makeStyles } from '@material-ui/styles';
+import { Redirect } from 'react-router-dom';
+
 import {
   Grid,
   Button,
   TextField,
-  Typography
+  Typography,
+
 } from '@material-ui/core';
-import {API,LOGIN} from '../../config';
+import { API, LOGIN } from '../../config';
 const api = `${API}${LOGIN}`;
 const schema = {
   email: {
@@ -21,7 +24,7 @@ const schema = {
       maximum: 64
     }
   },
-  
+
   password: {
     presence: { allowEmpty: false, message: 'is required' },
     length: {
@@ -175,19 +178,24 @@ const SignIn = props => {
       email: formState.values.email,
       password: formState.values.password,
     }).then(function (response) {
-      const  token  = response.data.token;
-      localStorage.setItem('token',token);
+      const token = response.data.token;
+      localStorage.setItem('token', token);
       console.log(token);
       console.log(response);
-      if (response.data.token != null){
+      if (response.data.token != null) {
         history.push('/dashboard');
       }
     }).catch(function (error) {
       console.log(error);
     });
-   
+
   };
-  
+  if (localStorage.getItem('token') != null) {
+    return (
+      <Redirect to="/dashboard" />
+    );
+  }
+
   const hasError = field =>
     formState.touched[field] && formState.errors[field] ? true : false;
 
@@ -235,7 +243,7 @@ const SignIn = props => {
           xs={12}
         >
           <div className={classes.content}>
-            
+
             <div className={classes.contentBody}>
               <form
                 className={classes.form}
@@ -247,7 +255,7 @@ const SignIn = props => {
                 >
                   Sign in
                 </Typography>
-                
+
                 <TextField
                   className={classes.textField}
                   error={hasError('email')}
@@ -287,7 +295,7 @@ const SignIn = props => {
                 >
                   Sign in now
                 </Button>
-                
+
               </form>
             </div>
           </div>

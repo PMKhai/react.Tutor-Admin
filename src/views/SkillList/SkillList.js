@@ -33,7 +33,7 @@ const SkillList = () => {
       }
     };
     loadData();
-  }, []);
+  }, [skills]);
   return (
     <div className={classes.root}>
       <SkillsToolbar />

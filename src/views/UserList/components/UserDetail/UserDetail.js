@@ -32,6 +32,7 @@ const UserDetail = props => {
   const {user} = rest;
   useEffect(() => {
     setValues(user);
+    // eslint-disable-next-line
   }, []);
   
   const handleChange = event => {
@@ -67,12 +68,17 @@ const UserDetail = props => {
       console.log(error);
     }
   };
+
+   
   
   const updateAdminUser = () =>{
     
     loadData();
-    console.log('update user ', values._id);
   };
+
+  // const viewProfile = ()=>{
+  //   console.log('view profile');
+  // };
 
   const isActive = (values)=>{
     if (values.isActivated === true || values.isActivated === 'true') {
@@ -200,7 +206,8 @@ const UserDetail = props => {
             Save details
           </Button>
           <Button
-            // onClick ={updateAdminUser}
+            // onClick ={viewProfile}
+            href = {'/UserDetail?id=' + values._id}
             variant="contained"
           >
             View profile

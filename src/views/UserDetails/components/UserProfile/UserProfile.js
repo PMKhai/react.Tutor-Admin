@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import React, {useState} from 'react';
+import React, {useState , useEffect} from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { getInitials } from 'helpers';
@@ -7,21 +7,17 @@ import { getInitials } from 'helpers';
 // import moment from 'moment';
 import { makeStyles } from '@material-ui/styles';
 import {
+  Rating,
+} from '@material-ui/lab';
+import {
   Card,
   CardActions,
   CardContent,
   Avatar,
   Typography,
   Divider,
-  Button,
-  LinearProgress
+  Box
 } from '@material-ui/core';
-
-const getBase64 = (img, callback) => {
-  const reader = new FileReader();
-  reader.addEventListener('load', () => callback(reader.result));
-  reader.readAsDataURL(img);
-};
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -44,26 +40,45 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+const getCost = (values)=>{
+  const baseCost = values.price *1000;
+  return baseCost.toString() + ' VND';
+};
+
 const UserProfile = props => {
   const { className, ...rest } = props;
   
   // eslint-disable-next-line no-unused-vars
   const [avatar, setAvatar] = useState(null);
-  const [urlAvatar, setUrlAvatar] = useState('');
   const classes = useStyles();
 
  
   console.log(rest.user);
-
-  const handleChooseFile = e =>{
-    let file = e.target.files[0];
-    setAvatar(file);
-    getBase64(file, imageUrl =>
-      setUrlAvatar(imageUrl)
-    );
-  };
-
+  const [values, setValues] = useState({
+    email: '',
+    isTutor: null,
+    isActivated: false,
+    isActiveToken: null,
+    name: '',
+    p_number: '',
+    urlAvatar: null,
+    address: null,
+    overview: '',
+    price: null,
+    rating: null
+  });
   const {user} = rest;
+
+  useEffect(() => {
+    setValues(user);
+  }, [user]);
+  const isRole = (values)=>{
+    if (values.isTutor) {
+      return 'Teacher';
+    } else {
+      return 'Student';
+    }
+  };
 
   return (
     <Card
@@ -77,33 +92,24 @@ const UserProfile = props => {
               gutterBottom
               variant="h2"
             >
-              {user.lastName}
+              {values.name}
             </Typography>
             <Typography
               className={classes.locationText}
               color="textSecondary"
               variant="body1"
             >
-              {user.address}
+              {isRole(user)}
             </Typography>
             <Typography
               className={classes.dateText}
               color="textSecondary"
               variant="body1"
             >
-              {user.phone}
-              {/* {moment().format('hh:mm A')} ({user.timezone}) */}
+              {values.overview}
             </Typography>
           </div>
-          <input
-            accept="image/*"
-            className={classes.input}
-            id="raised-button-file"
-            multiple
-            onChange={(e) => handleChooseFile(e)}
-            style={{ display: 'none' }}
-            type="file"
-          />
+          
           <label 
             className={classes.avatar} 
             htmlFor="raised-button-file"
@@ -111,31 +117,32 @@ const UserProfile = props => {
             <Avatar
               className={classes.avatar} 
               component="span"
-              src={urlAvatar === '' ? user.avatar : urlAvatar}
+              src={values.urlAvatar}
             >
-              {getInitials(user.lastName)}
+              {getInitials(values.name)}
             </Avatar>
           </label>
         </div>
         <div className={classes.progress}>
-          <Typography variant="body1">Profile Completeness: 70%</Typography>
-          <LinearProgress
-            value={70}
-            variant="determinate"
-          />
+          <Box 
+            borderColor="transparent"
+            component="fieldset" 
+            mb={3} 
+          >
+            <Typography variant="body1">RATING</Typography>
+            <Rating 
+              name="read-only"
+              readOnly
+              size="large" 
+              value={values.rating} 
+            />
+          </Box>
         </div>
       </CardContent>
       <Divider />
       <CardActions>
-        <Button
-          className={classes.uploadButton}
-          color="primary"
-          component="span"
-          variant="text"
-        >
-          Upload picture
-        </Button>
-        <Button variant="text">Remove picture</Button>
+        <Typography variant="body1">PRICE:</Typography>
+        <Typography variant="body1">{getCost(values)}</Typography>
       </CardActions>
     </Card>
   );
