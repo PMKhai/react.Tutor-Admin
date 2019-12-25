@@ -14,8 +14,9 @@ import { Button,
 } from '@material-ui/core';
 import axios from 'axios';
 import { SearchInput } from 'components';
-import {API,ADDSKILL} from '../../../../config';
+import {API,ADDSKILL, DELETESKILL} from '../../../../config';
 const api = `${API}${ADDSKILL}`;
+const apiDelee = `${API}${DELETESKILL}`;
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -42,6 +43,7 @@ const useStyles = makeStyles(theme => ({
 const UsersToolbar = props => {
   const { className, ...rest } = props;
   const classes = useStyles();
+  const {selectedSkill} = rest;
   // const handleRenderComponent = () =>{
   //   setShowFromEdit(true);
   // };
@@ -67,6 +69,7 @@ const UsersToolbar = props => {
     console.log(header);
     axios.post(api, {
       name: values.name,
+      description: values.description
     },{
       headers: { Authorization: header },
     }).then(function (response) {
@@ -79,6 +82,22 @@ const UsersToolbar = props => {
   const handleClickOpen = () => {
     setOpen(true);
   };
+
+  const removeSkill = async (value)=>{
+    const header = `Bearer ${localStorage.getItem('token')}`;
+    await axios.post(apiDelee,{
+      name: value
+    }, {
+      headers: { Authorization: header },
+    });
+  };
+  const handleDelete = ()=>{
+    selectedSkill.forEach(element => {
+      removeSkill(element);
+    });
+  };
+
+
   return (
     <div
       {...rest}
@@ -86,8 +105,10 @@ const UsersToolbar = props => {
     >
       <div className={classes.row}>
         <span className={classes.spacer} />
-        <Button className={classes.importButton}>Import</Button>
-        <Button className={classes.exportButton}>Export</Button>
+        <Button 
+          className={classes.exportButton} 
+          onClick = {handleDelete}
+        >DELETE</Button>
         <Button
           color="primary"
           onClick={handleClickOpen}
@@ -121,18 +142,20 @@ const UsersToolbar = props => {
               margin="dense"
               name = "name"
               onChange={handleChange}
+              required
               type="text"
               value = {values.name}
             />
             <TextField
               fullWidth
-              id="decription"
-              label="Decription"
+              id="description"
+              label="Description"
               margin="dense"
-              name = "decription"
+              name = "description"
               onChange={handleChange}
+              required
               type="text"
-              value = {values.decription}
+              value = {values.description}
             />
           </DialogContent>
           <DialogActions>

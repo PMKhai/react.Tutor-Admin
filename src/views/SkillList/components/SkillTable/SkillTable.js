@@ -55,7 +55,7 @@ const useStyles = makeStyles(theme => ({
 
 const SkillsTable = props => {
   const { className, skills, ...rest } = props;
-
+  const {onSelected} = rest;
   const classes = useStyles();
 
   const [selectedUsers, setSelectedUsers] = useState([]);
@@ -76,6 +76,7 @@ const SkillsTable = props => {
     }
 
     setSelectedUsers(selectedUsers);
+    onSelected(selectedUsers);
   };
 
   const handleSelectOne = (event, email) => {
@@ -96,6 +97,7 @@ const SkillsTable = props => {
     }
 
     setSelectedUsers(newSelectedUsers);
+    onSelected(newSelectedUsers);
   };
 
   const handlePageChange = (event, page) => {
@@ -175,22 +177,6 @@ const SkillsTable = props => {
                     </TableCell>
                     <TableCell>{skill.name}</TableCell>
                     <TableCell>{skill.description}</TableCell>
-                    {/* <TableCell>
-                      {user.address}
-                    </TableCell>
-                    <TableCell>{user.phone}</TableCell>
-                    <TableCell>
-                      {moment(user.createdAt).format('DD/MM/YYYY')}
-                    </TableCell> */}
-                    {/* <TableCell>
-                      <Button 
-                        color="primary" 
-                        onClick={()=>handleRenderComponent({user})}
-                        variant="contained"
-                      >
-                        <SettingsApplications/>
-                      </Button>
-                    </TableCell> */}
                   </TableRow>
                 ))}
               </TableBody>

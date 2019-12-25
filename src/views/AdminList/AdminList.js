@@ -7,7 +7,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import axios from 'axios';
 import { AdminToolbar, AdminCard } from './components';
 // import mockData from './data';
-import {API,LISTADMIN} from '../../config';
+import { API, LISTADMIN } from '../../config';
 const api = `${API}${LISTADMIN}`;
 
 const useStyles = makeStyles(theme => ({

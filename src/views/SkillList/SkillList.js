@@ -18,6 +18,7 @@ const useStyles = makeStyles(theme => ({
 const SkillList = () => {
   const classes = useStyles();
   let [skills, setSkills] = useState([]);
+  const [selectedSkills, setSelectedSkills] = useState([]);
 
   useEffect(() => {
     const header = `Bearer ${localStorage.getItem('token')}`;
@@ -34,11 +35,17 @@ const SkillList = () => {
     };
     loadData();
   }, [skills]);
+  const setSelected = (value) => {
+    setSelectedSkills(value);
+  };
   return (
     <div className={classes.root}>
-      <SkillsToolbar />
+      <SkillsToolbar selectedSkill = {selectedSkills}/>
       <div className={classes.content}>
-        <SkillsTable skills={skills} />
+        <SkillsTable 
+          onSelected = {setSelected}
+          skills={skills} 
+        />
       </div>
     </div>
   );

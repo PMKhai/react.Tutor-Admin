@@ -11,6 +11,7 @@ export const LISTCONTRACT = 'contracts';
 export const UPDATEUSER = 'users/updateUser';
 export const GETUSER = 'users/getUser';
 export const DELETEUSER = 'users/deleteUser';
+export const DELETESKILL = 'skills/deleteSkill';
 
 
 
