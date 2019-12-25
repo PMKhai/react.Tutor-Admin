@@ -12,6 +12,7 @@ export const UPDATEUSER = 'users/updateUser';
 export const GETUSER = 'users/getUser';
 export const DELETEUSER = 'users/deleteUser';
 export const DELETESKILL = 'skills/deleteSkill';
+export const UPDATESTATUS = 'contracts/UpdateStatus';
 
 
 

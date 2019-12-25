@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import React, { useState  } from 'react';
+import React, { useState } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 // import moment from 'moment';
@@ -15,7 +15,16 @@ import {
   TableHead,
   TableRow,
   TablePagination,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  Select,
 } from '@material-ui/core';
+import Moment from 'react-moment';
+import axios from 'axios';
+import {API , UPDATESTATUS } from '../../../../config';
+const api = `${API}${UPDATESTATUS}`;
+
 // import { SettingsApplications } from '@material-ui/icons';
 // import { getInitials } from 'helpers';
 
@@ -45,7 +54,14 @@ const useStyles = makeStyles(theme => ({
   },
   cardDetail: {
     width: '75%'
-  }
+  },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+  },
 }));
 
 const ContractCard = props => {
@@ -56,7 +72,6 @@ const ContractCard = props => {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [page, setPage] = useState(0);
 
-  
 
   const handlePageChange = (event, page) => {
     setPage(page);
@@ -65,8 +80,27 @@ const ContractCard = props => {
   const handleRowsPerPageChange = event => {
     setRowsPerPage(event.target.value);
   };
-  
- 
+
+  const loadData = async (value , status) => {
+    const header = `Bearer ${localStorage.getItem('token')}`;
+    try {
+      await axios.post(api, {
+        _id: value._id,
+        status:status,
+        
+      }, {
+        headers: { Authorization: header },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleStatusChange = (event,value)  => {
+    // setStatus(event.target.value);
+    loadData(value,event.target.value);
+    // console.log(value._id);
+  };
 
   return (
     <Card
@@ -79,31 +113,57 @@ const ContractCard = props => {
             <Table>
               <TableHead>
                 <TableRow>
-                  
-                  <TableCell>id</TableCell>
+
+                  <TableCell>Day Of Hire</TableCell>
                   <TableCell>tutor</TableCell>
                   <TableCell>Student</TableCell>
+                  <TableCell>Total</TableCell>
                   <TableCell>status</TableCell>
-                  <TableCell>payment</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {users.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(user => (
+                {users.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(value => (
                   <TableRow
                     className={classes.tableRow}
                     hover
-                    key={user.email}
+                    key={value.email}
                   >
-                    <TableCell>{user._id}</TableCell>
                     <TableCell>
-                      {user.tutor}
+                      <Moment
+                        date={value.dayOfHire}
+                        format="YYYY/MM/DD"
+                      /></TableCell>
+                    <TableCell>
+                      {value.tutor}
                     </TableCell>
-                    <TableCell>{user.student}</TableCell>
+                    <TableCell>{value.student}</TableCell>
                     <TableCell>
-                      {user.status}
+
+                      {value.totalMoney}$
                     </TableCell>
                     <TableCell>
-                      {user.payment}
+                      <FormControl className={classes.formControl}>
+                        <InputLabel 
+                          id="demo-simple-select-placeholder-label-label"
+                          shrink
+                        >
+                          Status
+                        </InputLabel>
+                        <Select
+                          className={classes.selectEmpty}
+                          // displayEmpty
+                          id="demo-simple-select-placeholder-label"
+                          labelId="demo-simple-select-placeholder-label-label"
+                          onChange={event => handleStatusChange(event, value)}
+                          value={value.status}
+                        >
+                          {value.status}
+                          <MenuItem value="cancel">cancel</MenuItem>
+                          <MenuItem value="done">done</MenuItem>
+                          <MenuItem value="pending" >pending</MenuItem>
+                        </Select>
+                      </FormControl>
+
                     </TableCell>
                   </TableRow>
                 ))}
@@ -123,7 +183,7 @@ const ContractCard = props => {
           rowsPerPageOptions={[5, 10, 25]}
         />
       </CardActions>
-    </Card>
+    </Card >
   );
 };
 

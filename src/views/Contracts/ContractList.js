@@ -34,7 +34,7 @@ const ContractList = () => {
       }
     };
     loadData();
-  }, []);
+  }, [users]);
   return (
     <div className={classes.root}>
       <ContractToolbar />
