@@ -1,10 +1,10 @@
 /* eslint-disable no-console */
-import React, { useState, useEffect } from 'react';
-import { makeStyles } from '@material-ui/styles';
-import axios from 'axios';
-import {API , LISTCONTRACT } from '../../config';
+import React, { useState, useEffect } from './../../../node_modules/react';
+import { makeStyles } from './../../../node_modules/@material-ui/styles';
+import axios from './../../../node_modules/axios';
+import {API , REPORTS } from '../../config';
 import {  ContractCard } from './components';
-const api = `${API}${LISTCONTRACT}`;
+const api = `${API}${REPORTS}`;
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-const ContractList = () => {
+const ReportList = () => {
   const classes = useStyles();
   let [users, setUsers] = useState([]);
 
@@ -46,4 +46,4 @@ const ContractList = () => {
 
 
 
-export default ContractList;
+export default ReportList;

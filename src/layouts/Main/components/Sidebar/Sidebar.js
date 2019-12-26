@@ -11,6 +11,7 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import SubjectIcon from '@material-ui/icons/Subject';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisedUserCircle';
 import WorkIcon from '@material-ui/icons/Work';
+import ReportIcon from '@material-ui/icons/Report';
 // import LockOpenIcon from '@material-ui/icons/LockOpen';
 import { Profile, SidebarNav } from './components';
 import axios from 'axios';
@@ -82,7 +83,13 @@ const Sidebar = props => {
       title: 'Settings',
       href: '/settings',
       icon: <SettingsIcon />
+    },
+    {
+      title: 'Report',
+      href: '/report',
+      icon: <ReportIcon />
     }
+    
   ];
   let [user, setUsers] = useState({
     firstName: 'Shen',

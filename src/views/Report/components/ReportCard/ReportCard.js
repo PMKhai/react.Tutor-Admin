@@ -1,10 +1,10 @@
 /* eslint-disable no-console */
-import React, { useState } from 'react';
-import clsx from 'clsx';
-import PropTypes from 'prop-types';
+import React, { useState } from './../../../../../node_modules/react';
+import clsx from './../../../../../node_modules/clsx';
+import PropTypes from './../../../../../node_modules/prop-types';
 // import moment from 'moment';
-import PerfectScrollbar from 'react-perfect-scrollbar';
-import { makeStyles } from '@material-ui/styles';
+import PerfectScrollbar from './../../../../../node_modules/react-perfect-scrollbar';
+import { makeStyles } from './../../../../../node_modules/@material-ui/styles';
 import {
   Card,
   CardActions,
@@ -15,15 +15,12 @@ import {
   TableHead,
   TableRow,
   TablePagination,
-  MenuItem,
-  FormControl,
-  InputLabel,
-  Select,
-} from '@material-ui/core';
-import Moment from 'react-moment';
-import axios from 'axios';
-import {API , UPDATESTATUS } from '../../../../config';
-const api = `${API}${UPDATESTATUS}`;
+
+} from './../../../../../node_modules/@material-ui/core';
+// import Moment from './../../../../../node_modules/react-moment';
+// import axios from './../../../../../node_modules/axios';
+// import {API , UPDATESTATUS } from '../../../../config';
+// const api = `${API}${UPDATESTATUS}`;
 
 
 // import { SettingsApplications } from '@material-ui/icons';
@@ -65,7 +62,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const ContractCard = props => {
+const ReportCard = props => {
   const { className, users, ...rest } = props;
 
   const classes = useStyles();
@@ -82,26 +79,26 @@ const ContractCard = props => {
     setRowsPerPage(event.target.value);
   };
 
-  const loadData = async (value , status) => {
-    const header = `Bearer ${localStorage.getItem('token')}`;
-    try {
-      await axios.post(api, {
-        _id: value._id,
-        status:status,
-        money:value.totalMoney
-      }, {
-        headers: { Authorization: header },
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const loadData = async (value , status) => {
+  //   const header = `Bearer ${localStorage.getItem('token')}`;
+  //   try {
+  //     await axios.post(api, {
+  //       _id: value._id,
+  //       status:status,
+  //       money:value.totalMoney
+  //     }, {
+  //       headers: { Authorization: header },
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
 
-  const handleStatusChange = (event,value)  => {
-    loadData(value,event.target.value);
+  // const handleStatusChange = (event,value)  => {
+  //   loadData(value,event.target.value);
 
-  };
+  // };
 
   return (
     <Card
@@ -115,11 +112,10 @@ const ContractCard = props => {
               <TableHead>
                 <TableRow>
 
-                  <TableCell>Day Of Hire</TableCell>
                   <TableCell>tutor</TableCell>
                   <TableCell>Student</TableCell>
-                  <TableCell>Total</TableCell>
-                  <TableCell>status</TableCell>
+                  <TableCell>report</TableCell>
+                  <TableCell>vote</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -130,41 +126,15 @@ const ContractCard = props => {
                     key={value.email}
                   >
                     <TableCell>
-                      <Moment
-                        date={value.dayOfHire}
-                        format="YYYY/MM/DD"
-                      /></TableCell>
-                    <TableCell>
                       {value.tutor}
                     </TableCell>
                     <TableCell>{value.student}</TableCell>
                     <TableCell>
 
-                      {value.totalMoney}$
+                      {value.description}
                     </TableCell>
                     <TableCell>
-                      <FormControl className={classes.formControl}>
-                        <InputLabel 
-                          id="demo-simple-select-placeholder-label-label"
-                          shrink
-                        >
-                          Status
-                        </InputLabel>
-                        <Select
-                          className={classes.selectEmpty}
-                          // displayEmpty
-                          id="demo-simple-select-placeholder-label"
-                          labelId="demo-simple-select-placeholder-label-label"
-                          onChange={event => handleStatusChange(event, value)}
-                          value={value.status}
-                        >
-                          {value.status}
-                          <MenuItem value="cancel">cancel</MenuItem>
-                          <MenuItem value="done">done</MenuItem>
-                          <MenuItem value="pending" >pending</MenuItem>
-                        </Select>
-                      </FormControl>
-
+                      {value.vote}
                     </TableCell>
                   </TableRow>
                 ))}
@@ -188,10 +158,10 @@ const ContractCard = props => {
   );
 };
 
-ContractCard.propTypes = {
+ReportCard.propTypes = {
   className: PropTypes.string,
   users: PropTypes.array.isRequired
 };
 
 
-export default ContractCard;
+export default ReportCard;

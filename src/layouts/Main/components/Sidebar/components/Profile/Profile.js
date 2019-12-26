@@ -42,7 +42,6 @@ const Profile = (props) => {
         className={classes.avatar}
         component={RouterLink}
         src={user.avatar}
-        to="/settings"
       >
         {getInitials(user.lastName)}
       </Avatar>

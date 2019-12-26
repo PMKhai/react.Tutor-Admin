@@ -9,3 +9,5 @@ export { default as UserList } from './UserList';
 export { default as AdminList} from './AdminList';
 export {default as Contracts} from './Contracts';
 export {default as UserDetails} from './UserDetails';
+export {default as Report} from './Report';
+
