@@ -3,7 +3,6 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import { Card, CardContent, Grid, Typography, Avatar } from '@material-ui/core';
-import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import MoneyIcon from '@material-ui/icons/Money';
 
 const useStyles = makeStyles(theme => ({
@@ -42,7 +41,7 @@ const useStyles = makeStyles(theme => ({
 
 const Budget = props => {
   const { className, ...rest } = props;
-
+  const {bubget} = rest; 
   const classes = useStyles();
 
   return (
@@ -62,9 +61,10 @@ const Budget = props => {
               gutterBottom
               variant="body2"
             >
+              {/* total transactions */}
               BUDGET
             </Typography>
-            <Typography variant="h3">$24,000</Typography>
+            <Typography variant="h3">${bubget}</Typography>
           </Grid>
           <Grid item>
             <Avatar className={classes.avatar}>
@@ -73,19 +73,19 @@ const Budget = props => {
           </Grid>
         </Grid>
         <div className={classes.difference}>
-          <ArrowDownwardIcon className={classes.differenceIcon} />
-          <Typography
+          {/* <ArrowDownwardIcon className={classes.differenceIcon} /> */}
+          {/* <Typography
             className={classes.differenceValue}
             variant="body2"
           >
             12%
-          </Typography>
-          <Typography
+          </Typography> */}
+          {/* <Typography
             className={classes.caption}
             variant="caption"
           >
             Since last month
-          </Typography>
+          </Typography> */}
         </div>
       </CardContent>
     </Card>

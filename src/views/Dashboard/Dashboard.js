@@ -1,19 +1,21 @@
 /* eslint-disable no-console */
-import React from 'react';
+import React , { useState , useEffect  }from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { Grid } from '@material-ui/core';
 
 import {
   Budget,
   TotalUsers,
-  TasksProgress,
   TotalProfit,
   LatestSales,
   UsersByDevice,
   LatestProducts,
   LatestOrders
 } from './components';
-
+import axios from 'axios';
+import {API , BUDGET ,TOTAL } from '../../config';
+const api = `${API}${BUDGET}`;
+const apiTOTAL = `${API}${TOTAL}`;
 const useStyles = makeStyles(theme => ({
   root: {
     padding: theme.spacing(4)
@@ -21,8 +23,39 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Dashboard = () => {
+  const [bubget, setbubget] = useState();
+  const [total, setTotal] = useState();
   const classes = useStyles();
-  
+  const header = `Bearer ${localStorage.getItem('token')}`;
+  const loadData = async () => {
+    try {
+      const response = await axios.get(api, {
+        headers: { Authorization: header },
+      });
+      const {data} = response.data[0];
+      setbubget(data);
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const loadTotal = async () => {
+    try {
+      const response = await axios.get(apiTOTAL, {
+        headers: { Authorization: header },
+      });
+      const {data} = response.data[0];
+      setTotal(data);
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    loadData();
+    loadTotal();
+    // eslint-disable-next-line
+  }, []);
   return (
     <div className={classes.root}>
       <Grid
@@ -36,7 +69,7 @@ const Dashboard = () => {
           xl={3}
           xs={12}
         >
-          <Budget />
+          <Budget bubget = {total}/>
         </Grid>
         <Grid
           item
@@ -47,6 +80,7 @@ const Dashboard = () => {
         >
           <TotalUsers />
         </Grid>
+        
         <Grid
           item
           lg={3}
@@ -54,16 +88,7 @@ const Dashboard = () => {
           xl={3}
           xs={12}
         >
-          <TasksProgress />
-        </Grid>
-        <Grid
-          item
-          lg={3}
-          sm={6}
-          xl={3}
-          xs={12}
-        >
-          <TotalProfit />
+          <TotalProfit total = {bubget}/>
         </Grid>
         <Grid
           item

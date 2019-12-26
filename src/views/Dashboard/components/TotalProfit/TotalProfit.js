@@ -32,7 +32,7 @@ const useStyles = makeStyles(theme => ({
 
 const TotalProfit = props => {
   const { className, ...rest } = props;
-
+  const {total} = rest;
   const classes = useStyles();
 
   return (
@@ -52,13 +52,13 @@ const TotalProfit = props => {
               gutterBottom
               variant="body2"
             >
-              TOTAL PROFIT
+              TOTAL TRANSACTIONS
             </Typography>
             <Typography
               color="inherit"
               variant="h3"
             >
-              $23,200
+              ${total}
             </Typography>
           </Grid>
           <Grid item>

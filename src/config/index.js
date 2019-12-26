@@ -14,7 +14,9 @@ export const DELETEUSER = 'users/deleteUser';
 export const DELETESKILL = 'skills/deleteSkill';
 export const UPDATESTATUS = 'contracts/UpdateStatus';
 export const UPDATEWALLETADMIN = 'admin/updateWallet';
-export const SALEADMIN = 'contracts/listSevenDayContract';
+export const BUDGET = 'contracts/BUDGET';
+export const TOTAL = 'contracts/TOTAL';
+
 export const REPORTS = 'report';
 
 

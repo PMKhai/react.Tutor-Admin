@@ -41,8 +41,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const getCost = (values)=>{
-  const baseCost = values.price *1000;
-  return baseCost.toString() + ' VND';
+  const baseCost = values.price *1;
+  return baseCost.toString() + ' $';
 };
 
 const UserProfile = props => {
