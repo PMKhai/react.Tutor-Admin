@@ -7,7 +7,6 @@ import { Divider, Drawer } from '@material-ui/core';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import PeopleIcon from '@material-ui/icons/People';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
-import SettingsIcon from '@material-ui/icons/Settings';
 import SubjectIcon from '@material-ui/icons/Subject';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisedUserCircle';
 import WorkIcon from '@material-ui/icons/Work';
@@ -78,11 +77,6 @@ const Sidebar = props => {
       title: 'Account',
       href: '/account',
       icon: <AccountBoxIcon />
-    },
-    {
-      title: 'Settings',
-      href: '/settings',
-      icon: <SettingsIcon />
     },
     {
       title: 'Report',

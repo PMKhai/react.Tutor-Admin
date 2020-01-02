@@ -128,6 +128,7 @@ const ContractCard = props => {
                     className={classes.tableRow}
                     hover
                     key={value.email}
+
                   >
                     <TableCell>
                       <Moment
@@ -140,7 +141,7 @@ const ContractCard = props => {
                     <TableCell>{value.student}</TableCell>
                     <TableCell>
 
-                      {value.totalMoney}$
+                      ${value.totalMoney}
                     </TableCell>
                     <TableCell>
                       <FormControl className={classes.formControl}>

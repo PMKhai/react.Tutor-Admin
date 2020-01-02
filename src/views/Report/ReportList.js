@@ -3,7 +3,7 @@ import React, { useState, useEffect } from './../../../node_modules/react';
 import { makeStyles } from './../../../node_modules/@material-ui/styles';
 import axios from './../../../node_modules/axios';
 import {API , REPORTS } from '../../config';
-import {  ContractCard } from './components';
+import {  ReportCard } from './components';
 const api = `${API}${REPORTS}`;
 
 const useStyles = makeStyles(theme => ({
@@ -38,7 +38,7 @@ const ReportList = () => {
   return (
     <div className={classes.root}>
       <div className={classes.content}>
-        <ContractCard users={users} />
+        <ReportCard users={users} />
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-// export const API = 'https://api-tutor-admin.herokuapp.com/'
+// export const API = 'https://api-tutor-admin.herokuapp.com/';
 export const API = 'http://localhost:4000/';
 export const ADMIN = 'admin/me';
 export const LISTADMIN = 'admin/list';

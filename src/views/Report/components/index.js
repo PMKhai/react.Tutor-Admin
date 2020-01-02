@@ -1,1 +1,1 @@
-export { default as ContractCard } from './ReportCard';
+export { default as ReportCard } from './ReportCard';
